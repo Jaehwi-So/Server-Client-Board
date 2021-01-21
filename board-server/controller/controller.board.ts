@@ -19,6 +19,16 @@ class BoardController implements Controller {
         });
     };
 
+    /*
+    public insert_board = async (req: Request, res: Response, next: NextFunction) => {
+        req.body
+        console.log('test');
+        return res.json({
+            result : 'success'
+        });
+    };
+    */
+
    
 }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ApiService } from '../service/api.service';
 
 @Component({
@@ -8,33 +9,35 @@ import { ApiService } from '../service/api.service';
 })
 export class TestComponent implements OnInit {
 
-  result : string;
+  resultPromise : string;
+  resultObservable : string
 
   constructor(private apiService : ApiService) { 
   }
 
   //비동기 Asnyc/Await으로 api에 요청
-   /*
-  async ngOnInit() {
-    let result = null;
+  async ngOnInit(){
+    
+    /*
+    let data = null;
     try{
-      result = await this.apiService.get_api_promise(this.apiUrl);  //Promise
+      data = await this.apiService.get_api_promise<TestModel>(`http://localhost:8080/board`);  //Observable의 변수는 뒤에 $를 붙인다.
     }
     catch(e){
       console.error("API Request fail");
     }
-    if(result){
-      this.users = result;
+    if(data){
+      this.resultPromise = data.result;
     }
-  }
-  */
+    */
+    
 
-  //Rxjs의 Observable을 통해 가져오는 방법
-  ngOnInit(){
-    const users$ = this.apiService.get_api_observable(`http://localhost:8080/board`);  //Observable의 변수는 뒤에 $를 붙인다.
-    users$.subscribe(data => {
-      this.result = data.result;
-    })
-  }
+    
+    this.apiService.get_api_request<TestModel>(`http://localhost:8080/board`).subscribe((data) => {
+      this.resultObservable = data.result;
+    });
+    
 
+
+  }
 }

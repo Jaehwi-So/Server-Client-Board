@@ -31,7 +31,7 @@ class AuthController implements Controller {
                 secret,
                 {
                 expiresIn: '1m', // 1분
-                issuer: 'nodebird',
+                issuer: 'board-service',
             });
             return res.json({
                 code: 200,

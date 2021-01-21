@@ -1,4 +1,5 @@
 import BoardController from '../controller/controller.board';
+import MiddlewareController from '../controller/controller.middleware';
 import { Router } from 'express';
 import Route from './router.impl';
 import { Request } from 'express';
@@ -16,7 +17,7 @@ class PageRoute implements Route {
             credentials: true,
         }));
 
-        this.router.get(`${this.url}`, BoardController.test);  //메인 페이지 이동 = GET:/  (*/view)
+        this.router.get(`${this.url}`, MiddlewareController.verify_token, BoardController.test);  //메인 페이지 이동 = GET:/  (*/view)
     }
 }
 

@@ -2,15 +2,21 @@ import { RequestHandler, ErrorRequestHandler, Request, Response, NextFunction } 
 import Controller from './controller.impl';
 import jwt from 'jsonwebtoken';
 
+
+
 class MiddlewareController implements Controller {
     constructor() {
 
     }
-
+    
     /* JWT 토큰 식별 */
     public verify_token = (req : Request, res: Response, next: NextFunction) => {
         try{
-            req.decoded = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
+            let authorization : string;
+            authorization = req.headers.authorization!;
+            let secret : jwt.Secret;
+            secret = process.env.JWT_SECRET!;
+            (<any>req).decoded = jwt.verify(authorization, secret);
             return next();
         }
         catch(error){
