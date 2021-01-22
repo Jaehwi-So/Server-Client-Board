@@ -10,10 +10,12 @@ import { BoardComponent } from './views/board/board.component';
 import { CommonModule } from '@angular/common';
 import { BoardModule } from './views/board/board.module';
 import { SharedModule } from './shared/shared.module';
+import { MainComponent } from './views/main/main.component';
 @NgModule({
   declarations: [ //컴포넌트, 디렉티브, 파이프의 리스트를 선언. 모듈에 선언된 구성요소는 모듈 내에서 사용 가능하다.
     AppComponent,
     TestComponent,
+    MainComponent
   ],
   imports: [  //의존 관계의 앵귤러 라이브러리 모듈, 기능 모듈(하위 모듈), 라우팅 모듈, 서브 파티 모듈 등을 선언한다.
     BrowserModule,

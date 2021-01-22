@@ -1,8 +1,13 @@
-
-<p>
-  board works!
-  <app-board-list></app-board-list>
-  <app-board-insert-form></app-board-insert-form>
-  <app-board-detail></app-board-detail>
-  board works!
-</p>
+<section class="py-5 text-center container">
+  <div class="row py-lg-5">
+    <div class="col-lg-6 col-md-8 mx-auto">
+      <h1 class="fw-light">Board</h1>
+      <p class="lead text-muted">There is simple board. You can view simple board, also insert board with photo </p>
+      <p>
+        <a routerLink="./list" routerLinkActive="active" class="btn btn-primary my-2">Board List</a>
+        <a routerLink="./insert" routerLinkActive="active" class="btn btn-primary my-2">Insert board</a>
+      </p>
+    </div>
+  </div>
+</section>
+<router-outlet></router-outlet>

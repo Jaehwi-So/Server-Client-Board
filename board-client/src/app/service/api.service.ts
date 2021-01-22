@@ -80,6 +80,38 @@ export class ApiService {
     }
   }
 
+  public post_api_request<T> (url : string, data) : Observable<T>{
+    try{
+      if(this.getToken() == undefined || this.getToken() == null || this.isTokenExpired(this.getToken())){
+        return new Observable<T>((observer: Observer<T>) => {
+          this.token_signin() //1. 토큰 발급
+          .subscribe((tokenAuth : TokenAuthModel) => {  //2. 토큰 발급 완료 시 토큰 세팅
+            this.setToken(tokenAuth.token);
+            this.http.post<T>(url, data, { //3. 서버에 HTTP 요청
+              headers: {authorization: this.getToken()}
+            }).subscribe((resultModel : T) => { 
+              observer.next(resultModel); //4. 요청 완료 시 observer를 반응시킴(값 변환시점)
+              observer.complete();
+            })
+          })
+        });
+      }
+      return this.http.post<T>(url, data, {
+        headers: {authorization: this.getToken()}
+      });
+    }
+    catch(error){
+      if(error.status === 419){
+        console.log("토큰 만료", error);
+        return this.post_api_request(url, data);
+      }
+      else{
+        console.log("서버 오류 or 유효하지 않은 사용자", error);
+        return error.response;
+      }
+    }
+  }
+
   
 
   /*

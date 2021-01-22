@@ -2,8 +2,8 @@ import BoardController from '../controller/controller.board';
 import MiddlewareController from '../controller/controller.middleware';
 import { Router } from 'express';
 import Route from './router.impl';
-import { Request } from 'express';
 import cors from 'cors';
+import UploadUtil from '../util/util.upload';
 
 class PageRoute implements Route {
     public router  = Router();
@@ -18,6 +18,7 @@ class PageRoute implements Route {
         }));
 
         this.router.get(`${this.url}`, MiddlewareController.verify_token, BoardController.test);  //메인 페이지 이동 = GET:/  (*/view)
+        this.router.post(`${this.url}`, MiddlewareController.verify_token, UploadUtil.single_upload.single('file'), BoardController.insert_board);
     }
 }
 

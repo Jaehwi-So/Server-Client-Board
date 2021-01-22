@@ -10,6 +10,7 @@ import {
     public title!: string;   
     public content!: string;  
     public nick! : string;
+    public photo! : string;
   }
     
   Board.init({
@@ -24,6 +25,10 @@ import {
     nick: {
         type: DataTypes.STRING(200),
         allowNull: true,
+    },
+    photo: {
+      type: DataTypes.STRING(500),
+      allowNull: true,
     },
 
   }, {
