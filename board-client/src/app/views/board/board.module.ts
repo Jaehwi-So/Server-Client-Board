@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BoardComponent } from './board.component';
 import { BoardRoutingModule } from './board-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     CommonModule, //루트 모듈이 아니므로 CommonModule을 import해준다.
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   exports: [
     BoardComponent,

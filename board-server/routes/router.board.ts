@@ -17,7 +17,8 @@ class PageRoute implements Route {
             credentials: true,
         }));
 
-        this.router.get(`${this.url}`, MiddlewareController.verify_token, BoardController.test);  //메인 페이지 이동 = GET:/  (*/view)
+        this.router.get(`${this.url}`, MiddlewareController.verify_token, BoardController.select_list); 
+        this.router.get(`${this.url}/:id`, MiddlewareController.verify_token, BoardController.select_one); 
         this.router.post(`${this.url}`, MiddlewareController.verify_token, UploadUtil.single_upload.single('file'), BoardController.insert_board);
     }
 }

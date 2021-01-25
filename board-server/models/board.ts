@@ -1,7 +1,8 @@
 import { 
     Model, DataTypes, BelongsToManyGetAssociationsMixin, HasManyGetAssociationsMixin, 
-    BelongsToManyRemoveAssociationMixin, BelongsToManyAddAssociationMixin,
+    BelongsToManyRemoveAssociationMixin, BelongsToManyAddAssociationMixin, Sequelize,
   } from 'sequelize';
+  import seq from 'sequelize';
   import { dbType } from './index';
   import { sequelize } from './sequelize';
     
@@ -19,7 +20,7 @@ import {
         allowNull: true,
     },
     content: {
-        type: DataTypes.BLOB,
+        type: DataTypes.TEXT,
         allowNull: true,
     },
     nick: {

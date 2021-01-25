@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import ResponseModel from 'src/app/models/ResponseModel';
 import { ApiService } from 'src/app/service/api.service';
 import { environment } from 'src/environments/environment';
 
@@ -10,12 +12,12 @@ import { environment } from 'src/environments/environment';
 })
 export class BoardInsertFormComponent implements OnInit {
   boardModel : BoardModel;
-  apiUrl = 'http://localhost:8080';
+  apiUrl = environment.apiHost;
   imageSrc : string | ArrayBuffer = '#';
 
   insertForm: FormGroup;  //여러개의 FormControl을 다루기 위해 FormGroup 사용
 
-  constructor(private apiService : ApiService, private fb: FormBuilder) { 
+  constructor(private apiService : ApiService, private fb: FormBuilder, private router : Router) { 
     this.insertForm = this.fb.group({   //유효성 체크.
       title: ['', [Validators.required]],
       nick: ['', [Validators.required]],
@@ -53,18 +55,20 @@ export class BoardInsertFormComponent implements OnInit {
   }
 
   onSubmit(inputFile : FileList){
-    const { title, content, nick} = this.insertForm.controls;
+    const { title, content, nick } = this.insertForm.controls;
     const formData = new FormData();
     const file = inputFile[0];
     formData.append('title', title.value);
-    formData.append('contnet', content.value);
+    formData.append('content', content.value);
     formData.append('nick', nick.value);
     formData.append('file', file);
     console.log(formData);
     this.apiService.post_api_request(`${this.apiUrl}/board`, formData)
-    .subscribe((res : ResultModel) => {
+    .subscribe((res : ResponseModel) => {
       if(res.success == true){
         console.log('성공');
+        alert("게시물을 등록하였습니다.")
+        this.router.navigateByUrl('/board/list');
       }
       else{
         console.log('실패');
