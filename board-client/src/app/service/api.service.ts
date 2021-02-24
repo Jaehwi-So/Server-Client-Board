@@ -56,7 +56,7 @@ export class ApiService {
           .subscribe((tokenAuth : TokenAuthModel) => {  //2. 토큰 발급 완료 시 토큰 세팅
             this.setToken(tokenAuth.token);
             this.http.get<T>(url, { //3. 서버에 HTTP 요청
-              headers: {authorization: this.getToken()}
+              headers: {Authorization: `Bearer ${this.getToken() || ''}`}
             }).subscribe((resultModel : T) => { 
               observer.next(resultModel); //4. 요청 완료 시 observer를 반응시킴(값 변환시점)
               observer.complete();
@@ -65,7 +65,7 @@ export class ApiService {
         });
       }
       return this.http.get<T>(url, {
-        headers: {authorization: this.getToken()}
+        headers: {authorization: `Bearer ${this.getToken() || ''}`}
       });
     }
     catch(error){
@@ -88,7 +88,7 @@ export class ApiService {
           .subscribe((tokenAuth : TokenAuthModel) => {  //2. 토큰 발급 완료 시 토큰 세팅
             this.setToken(tokenAuth.token);
             this.http.post<T>(url, data, { //3. 서버에 HTTP 요청
-              headers: {authorization: this.getToken()}
+              headers: {Authorization: `Bearer ${this.getToken() || ''}`}
             }).subscribe((resultModel : T) => { 
               observer.next(resultModel); //4. 요청 완료 시 observer를 반응시킴(값 변환시점)
               observer.complete();

@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  apiHost: 'http://172.30.1.6:8080',
+  apiHost: 'http://172.30.1.6:8080/api/v1',
   clientHost: '172.30.1.6:4200',
-  clientSecret: '633669cb-b402-480d-8466-437a258e8c83'
+  clientSecret: '27418175-4c00-42da-85ec-c1bc70cff130'
 };
 
 /*

@@ -5,6 +5,7 @@ interface BoardModel {
   nick : string;
   photo : string;
   file : File;
+  createdAt : Date;
 }
 
   

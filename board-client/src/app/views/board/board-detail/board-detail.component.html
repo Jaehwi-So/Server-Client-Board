@@ -1,15 +1,15 @@
 <div class="col-md-12">
   <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
     <div class="col-md-7 d-flex flex-column position-static">
-      <h1 class="d-inline-block mb-2 text-primary">{{board.title | async}}</h1>
-      <h4 class="mb-0">{{board.nick}}</h4>
-      <div class="mb-1 text-muted">{{board.createdAt}}</div>
+      <h1 class="d-inline-block mb-2 text-primary" *ngIf="board">{{board.title}}</h1>
+      <h4 class="mb-0" *ngIf="board">{{board.nick}}</h4>
+      <div class="mb-1 text-muted" *ngIf="board">{{board.createdAt}}</div>
       <br>
-      <p class="card-text mb-auto">{{board.content}}</p>
-      <a href="#" class="stretched-link">Continue reading</a>
+      <p class="card-text mb-auto" *ngIf="board">{{board.content}}</p>
+      <a [routerLink]="['/board/list']" [queryParams]="{ page: page }" [routerLinkActive]="['active']" class="stretched-link">Continue reading</a>
     </div>
     <div class="col-md-5 d-flex d-lg-block">
-      <img src="{{apiUrl}}{{board.photo}}" width=100% height="500">
+      <img *ngIf="board" src="{{apiUrl}}{{board.photo}}" width=100% height="500">
 
     </div>
   </div>

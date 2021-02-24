@@ -16,13 +16,13 @@ export class BoardDetailComponent implements OnInit {
   private id : string;
   private apiUrl = environment.apiHost;
   private board : BoardModel;
+  private page : number = 0;
   
   constructor(private route : ActivatedRoute, private apiService : ApiService) { 
-
-  }
-
-  ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id')
+    this.id = this.route.snapshot.paramMap.get('id');
+    if(this.route.snapshot.queryParamMap.get('page')){
+      this.page = Number(this.route.snapshot.queryParamMap.get('page'));
+    }
     const board$ = this.apiService.get_api_request(`${this.apiUrl}/board/${this.id}`);
     board$.subscribe((res : ResponseModel) => {
       if(res.success == true){
@@ -30,6 +30,10 @@ export class BoardDetailComponent implements OnInit {
         console.log(this.board, this.board.title, this.board.content);
       }
     });
+  }
+
+  ngOnInit() {
+    
 
   }
 

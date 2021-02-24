@@ -10,6 +10,8 @@ import fs from 'fs';
 import cookieParser from 'cookie-parser';
 import expressSession from 'express-session';
 import path from 'path';
+import cors from 'cors';
+import { Router } from 'express';
 
 export const app = express();
 dotenv.config();
@@ -24,10 +26,6 @@ app.use(bodyParser.json());
 
 dotenv.config();    //dotenv config
 //passportConfig();   //passport config
-app.set('view engine', 'html'); //view engine
-//static path
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/img', express.static(path.join(__dirname, 'uploads')));
 
 //cookie-parser
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -48,12 +46,17 @@ app.use(sessionMiddleware);
 
 //server upload storage
 try {
-    fs.readdirSync('uploads');
+    fs.readdirSync('./src/uploads');
 } 
 catch (error) {
     console.error('is null directory, now mkdir');
-    fs.mkdirSync('uploads');
+    fs.mkdirSync('./src/uploads');
 }
+
+app.set('view engine', 'html'); //view engine
+//static path
+app.use(express.static(path.join(__dirname, './src/public')));
+app.use('/img', express.static(path.join(__dirname, './src/uploads')));
 
 //morgan option
 if(process.env.NODE_ENV === 'production'){
@@ -65,6 +68,7 @@ else{
 //port, host setting 
 app.set('port', process.env.PORT || 8080);  
 app.set('host', `${process.env.HOST}` || '0.0.0.0');  
+
 
 //Database Connection
 const { sequelize } = require('./models');
@@ -97,4 +101,8 @@ try {
 }
 
 //Routes config
+app.use(cors({
+  credentials: true,
+}));
+
 RegisterRoutes(app);

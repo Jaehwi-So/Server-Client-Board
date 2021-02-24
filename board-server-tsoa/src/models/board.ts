@@ -5,7 +5,15 @@ import {
   import seq from 'sequelize';
   import { dbType } from './index';
   import { sequelize } from './sequelize';
-    
+
+  export interface BoardModel{
+    id: number;
+    title: string;   
+    content: string;  
+    nick : string;
+    photo : string;
+  }  
+
   class Board extends Model{
     public readonly id!: number;
     public title!: string;   

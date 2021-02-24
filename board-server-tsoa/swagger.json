@@ -6,6 +6,28 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"JwtAuthModel": {
+				"properties": {
+					"code": {
+						"type": "number",
+						"format": "double"
+					},
+					"message": {
+						"type": "string"
+					},
+					"token": {
+						"additionalProperties": true,
+						"type": "object",
+						"nullable": true
+					}
+				},
+				"required": [
+					"code",
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
 			"ResponseModel": {
 				"properties": {
 					"success": {
@@ -14,9 +36,13 @@
 					"message": {
 						"type": "string"
 					},
-					"data": {},
+					"data": {
+						"additionalProperties": true,
+						"type": "object"
+					},
 					"code": {
-						"type": "string"
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
@@ -26,7 +52,36 @@
 					"code"
 				],
 				"type": "object",
-				"additionalProperties": false
+				"additionalProperties": true
+			},
+			"BoardModel": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"title": {
+						"type": "string"
+					},
+					"content": {
+						"type": "string"
+					},
+					"nick": {
+						"type": "string"
+					},
+					"photo": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"title",
+					"content",
+					"nick",
+					"photo"
+				],
+				"type": "object",
+				"additionalProperties": true
 			},
 			"DomainModel": {
 				"properties": {
@@ -38,7 +93,8 @@
 						"type": "string"
 					},
 					"clientSecret": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					}
 				},
 				"required": [
@@ -46,7 +102,7 @@
 					"host"
 				],
 				"type": "object",
-				"additionalProperties": false
+				"additionalProperties": true
 			},
 			"User": {
 				"properties": {
@@ -65,7 +121,8 @@
 						"enum": [
 							"Happy",
 							"Sad"
-						]
+						],
+						"nullable": true
 					},
 					"phoneNumbers": {
 						"items": {
@@ -81,66 +138,193 @@
 					"phoneNumbers"
 				],
 				"type": "object",
-				"additionalProperties": false
-			},
-			"Pick_User.email-or-name-or-phoneNumbers_": {
-				"properties": {
-					"email": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"phoneNumbers": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"email",
-					"name",
-					"phoneNumbers"
-				],
-				"type": "object",
-				"description": "From T, pick a set of properties whose keys are in the union K"
+				"additionalProperties": true
 			},
 			"UserCreationParams": {
-				"$ref": "#/components/schemas/Pick_User.email-or-name-or-phoneNumbers_"
+				"properties": {},
+				"type": "object",
+				"additionalProperties": true
 			}
 		},
-		"securitySchemes": {}
+		"securitySchemes": {
+			"jwt": {
+				"type": "http",
+				"scheme": "bearer",
+				"in": "header",
+				"name": "authorization jwt"
+			}
+		}
 	},
 	"info": {
-		"title": "board-server-tsoa",
+		"title": "BoardAPI",
 		"version": "1.0.0",
+		"description": "TSOA project",
 		"license": {
-			"name": "ISC"
-		},
-		"contact": {}
+			"name": "Jaehwi-so"
+		}
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/domain": {
+		"/auth/token": {
 			"post": {
-				"operationId": "Insert",
+				"operationId": "Token_issue",
 				"responses": {
 					"200": {
-						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/JwtAuthModel"
+								}
+							}
+						},
+						"description": "Ok"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/board": {
+			"get": {
+				"operationId": "Select_list",
+				"responses": {
+					"200": {
 						"content": {
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseModel"
 								}
 							}
+						},
+						"description": "Ok"
+					}
+				},
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
 						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "maxSize",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "Insert_board",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseModel"
+								}
+							}
+						},
+						"description": "Ok"
+					}
+				},
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/BoardModel"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/board/{id}": {
+			"get": {
+				"operationId": "Select_one",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseModel"
+								}
+							}
+						},
+						"description": "Ok"
+					}
+				},
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/domain": {
+			"post": {
+				"operationId": "Insert",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseModel"
+								}
+							}
+						},
+						"description": "Ok"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
-					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
@@ -156,14 +340,14 @@
 				"operationId": "GetUser",
 				"responses": {
 					"200": {
-						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/User"
 								}
 							}
-						}
+						},
+						"description": "Ok"
 					}
 				},
 				"security": [],
@@ -193,13 +377,15 @@
 				"operationId": "CreateUser",
 				"responses": {
 					"201": {
+						"content": {
+							"application/json": {}
+						},
 						"description": "Created"
 					}
 				},
 				"security": [],
 				"parameters": [],
 				"requestBody": {
-					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
@@ -213,7 +399,7 @@
 	},
 	"servers": [
 		{
-			"url": "/"
+			"url": "http://localhost:8080/api/v1"
 		}
 	]
 }

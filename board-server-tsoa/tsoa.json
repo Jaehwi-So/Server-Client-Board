@@ -1,14 +1,31 @@
 {
-    "entryFile": "src/app.ts",
-    "noImplicitAdditionalProperties": "throw-on-extras",
-    "controllerPathGlobs": ["./src/controller/*.controller.ts"],
-    "spec": {
-        "outputDirectory": "./",
-        "specVersion": 3   
+    "swagger": {
+      "name": "BoardAPI",
+      "license": "Jaehwi-so",
+      "description": "TSOA project",
+      "version": "1.0.0",
+      "basePath": "/api/v1",
+      "entryFile": "./src/server.ts",
+      "host": "localhost:8080",
+      "specVersion": 3,
+      "outputDirectory": "./",
+      "controllerPathGlobs": [
+        "./src/controller/*.controller.ts"
+      ],
+      "schemes": ["http"],
+      "securityDefinitions": {
+          "jwt": {
+            "type": "http",
+            "scheme": "bearer",
+            "in": "header",
+            "name": "authorization jwt"
+          }
+      }
     },
     "routes": {
-        "entryFile": "./src/index.ts",
-        "routesDir": "./src/routes",
-        "middleware": "express"
+      "basePath": "/api/v1",
+      "entryFile": "./src/server.ts",
+      "routesDir": "./src/routes",
+      "middleware": "express"
     }
-}
+  }

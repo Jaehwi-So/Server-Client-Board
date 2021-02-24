@@ -1,0 +1,98 @@
+import Domain from "../models/domain";
+import ResponseModel from "../models/responseModel";
+import { v4 as uuid } from 'uuid';
+import Board, { BoardModel } from "../models/board";
+import { PageModel } from "../models/page";
+import HttpStatusCode from "../enum/httpStatusCode";
+
+export const selectList = async (page : PageModel): Promise<ResponseModel>=> {
+    return new Promise(async (resolve, reject) => {
+        const curPage = page.page || 1;
+        const skipSize = (curPage - 1) * page.pageSize;
+        const collectionSize = await Board.count();
+        try{
+            const data = await Board.findAll({
+                order:[['createdAt', 'DESC']],
+                limit: page.pageSize,
+                offset: skipSize
+            });
+            if(data.length <= 0){
+                resolve({
+                    success : true,
+                    message : "결과가 존재하지 않습니다.",
+                    data : null,
+                    code : HttpStatusCode.NO_CONTENT
+                } as ResponseModel);
+            }
+            resolve({
+                success : true,
+                message : "게시물 목록을 불러왔습니다.",
+                data : {
+                    list : data,
+                    pager : {
+                        collectionSize : collectionSize,
+                        page : curPage,
+                        maxSize : page.maxSize,
+                        pageSize : page.pageSize,
+                    } as PageModel
+                },
+                code : HttpStatusCode.OK
+            } as ResponseModel);       
+        } catch(error){
+            reject(error);       
+        }
+    });
+}
+
+export const selectOne = async (id : number): Promise<ResponseModel>=> {
+    return new Promise(async (resolve, reject) => {
+        try{
+            const data = await Board.findOne({
+                where: { id : id }
+            });
+            if(data){
+                console.log(data);
+                resolve({
+                    success : true,
+                    message : "불러오기 성공",
+                    data : data,
+                    code : HttpStatusCode.OK
+                } as ResponseModel);
+            }
+            resolve({
+                success : true,
+                message : "결과가 존재하지 않습니다.",
+                data : null,
+                code : HttpStatusCode.NO_CONTENT
+            } as ResponseModel);
+        } catch(error){
+            reject(error);       
+        }
+    });
+}
+
+export const insert = async (form : BoardModel, url : string): Promise<ResponseModel>=> {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const { title, content, nick } = form;
+            await Board.create({   //insert
+                title : title,
+                content : content,
+                nick : nick,
+                photo : url
+            });
+            resolve({
+                success : true,
+                message : "게시 성공",
+                data : null,
+                code : HttpStatusCode.OK
+            } as ResponseModel);
+        } 
+        catch (error) {
+            console.error(error);
+            reject(error)
+        }
+    });
+    
+}
+

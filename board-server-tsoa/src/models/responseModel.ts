@@ -2,6 +2,6 @@ interface ResponseModel {
     success: boolean;
     message: string;
     data: any;
-    code: string;
+    code: number;
 }
 export default ResponseModel
