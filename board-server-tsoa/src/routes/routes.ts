@@ -9,6 +9,8 @@ import { BoardController } from './../controller/board.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { DomainController } from './../controller/domain.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { ResourceController } from './../controller/resource.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { UsersController } from './../controller/user.controller';
 import * as express from 'express';
 import { expressAuthentication } from '../services/auth';
@@ -37,14 +39,14 @@ const models: TsoaRoute.Models = {
         "additionalProperties": true,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "BoardModel": {
+    "BoardFormModel": {
         "dataType": "refObject",
         "properties": {
-            "id": { "dataType": "double", "required": true },
-            "title": { "dataType": "string", "required": true },
-            "content": { "dataType": "string", "required": true },
-            "nick": { "dataType": "string", "required": true },
-            "photo": { "dataType": "string", "required": true },
+            "id": { "dataType": "double" },
+            "title": { "dataType": "string" },
+            "content": { "dataType": "string" },
+            "nick": { "dataType": "string" },
+            "ridx": { "dataType": "double" },
         },
         "additionalProperties": true,
     },
@@ -166,7 +168,7 @@ export function RegisterRoutes(app: express.Express) {
         function(request: any, response: any, next: any) {
             const args = {
                 req: { "in": "request", "name": "req", "required": true, "dataType": "object" },
-                form: { "in": "body", "name": "form", "required": true, "ref": "BoardModel" },
+                form: { "in": "body", "name": "form", "required": true, "ref": "BoardFormModel" },
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -205,6 +207,51 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.insert.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.post('/api/v1/resource/single',
+        function(request: any, response: any, next: any) {
+            const args = {
+                req: { "in": "request", "name": "req", "required": true, "dataType": "object" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new ResourceController();
+
+
+            const promise = controller.insert.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get('/api/v1/resource/image',
+        function(request: any, response: any, next: any) {
+            const args = {
+                request: { "in": "request", "name": "request", "required": true, "dataType": "object" },
+                id: { "in": "query", "name": "id", "required": true, "dataType": "double" },
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new ResourceController();
+
+
+            const promise = controller.getImage.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

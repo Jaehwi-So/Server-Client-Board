@@ -1,12 +1,12 @@
 <div class="col-md-7 col-lg-12">
   <h4 class="mb-3">게시글 추가</h4>
-  <form class="needs-validation" [formGroup]="insertForm" (ngSubmit)="onSubmit(fileInput.files)">
+  <form class="needs-validation" [formGroup]="insertForm" (ngSubmit)="onSubmit()">
     <div class="row g-3">
       <div class="col-sm-6">
         <label for="title" class="form-label">제목</label>
         <input type="text" class="form-control" id="title" placeholder="Insert title" formControlName="title" required >
         <div class="invalid-feedback">
-          Valid title is required.
+          <app-form-handler *ngIf="insertForm.get('title').errors" [formGroupErrors]='insertForm.get("title").errors'></app-form-handler>
         </div>
       </div>
 
@@ -14,7 +14,7 @@
         <label for="lastName" class="form-label">닉네임</label>
         <input type="nick" class="form-control" id="nick" formControlName="nick" required>
         <div class="invalid-feedback">
-          Valid nickname is required.
+          <app-form-handler *ngIf="insertForm.get('nick').errors" [formGroupErrors]='insertForm.get("nick").errors'></app-form-handler>
         </div>
       </div>
 
@@ -22,22 +22,23 @@
         <div class="md-form amber-textarea active-amber-textarea-2">
           <textarea id="form16" class="md-textarea form-control" rows="15" id="content" formControlName="content" required></textarea>
           <div class="invalid-feedback">
-            Valid content is required.
+            <app-form-handler *ngIf="insertForm.get('content').errors" [formGroupErrors]='insertForm.get("content").errors'></app-form-handler>
           </div>
         </div>
       </div>
 
       <div class="col-12">
-        <label for="photo" class="form-label">사진</label>
-          <input type="file" class="form-control" id="file" formControlName="file" accept="image/*" (change)="onFileChange(fileInput.files)" #fileInput>
+        <label for="file" class="form-label">사진</label>
+          <input type="file" class="form-control" id="file" accept="image/*" (change)="onFileChange(fileInput.files)" #fileInput>
           <div class="invalid-feedback">
             Your username is required.
           </div>
       </div>
       <img *ngIf="imageSrc" [src]="imageSrc" class="avatar">
     </div>
+    <input type="text" class="form-control" id="ridx" formControlName="ridx" style="visibility:hidden">
     <hr class="my-4">
-    <button class="w-100 btn btn-primary btn-lg" type="submit">게시</button>
+    <button class="w-100 btn btn-primary btn-lg" type="submit" [disabled]="!insertForm.valid">게시</button>
   </form>
 </div>
 

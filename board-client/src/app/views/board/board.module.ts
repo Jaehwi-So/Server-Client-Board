@@ -9,6 +9,8 @@ import { BoardComponent } from './board.component';
 import { BoardRoutingModule } from './board-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
+import { LazyLoadImageDirective, LazyLoadImageModule } from 'ng-lazyload-image';
+
 
 @NgModule({
   declarations: [
@@ -24,16 +26,17 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
     CommonModule, //루트 모듈이 아니므로 CommonModule을 import해준다.
     FormsModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    LazyLoadImageModule,
   ],
   exports: [
     BoardComponent,
     BoardDetailComponent,
     BoardListComponent,
-    BoardInsertFormComponent
+    BoardInsertFormComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA  //앵귤러 전용 태그 사용을 위한 스키마
-  ]
+  ],
 })
 export class BoardModule { }

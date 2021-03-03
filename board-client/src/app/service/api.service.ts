@@ -97,7 +97,7 @@ export class ApiService {
         });
       }
       return this.http.post<T>(url, data, {
-        headers: {authorization: this.getToken()}
+        headers: {Authorization: `Bearer ${this.getToken() || ''}`}
       });
     }
     catch(error){

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { HOST } from '@angular/core/src/render3/interfaces/view';
 import { ActivatedRoute, Router } from '@angular/router';
 import PageModel from 'src/app/models/PageModel';
@@ -6,12 +6,13 @@ import ResponseModel from 'src/app/models/ResponseModel';
 import { ApiService } from 'src/app/service/api.service';
 import { environment } from 'src/environments/environment';
 
+
 @Component({
   selector: 'app-board-list',
   templateUrl: './board-list.component.html',
   styleUrls: ['./board-list.component.css']
 })
-export class BoardListComponent implements OnInit {
+export class BoardListComponent implements OnInit{
   private apiUrl : string = environment.apiHost;
   private boards;
   private pager : PageModel;
@@ -44,5 +45,12 @@ export class BoardListComponent implements OnInit {
   pageChanged(page : number){
     this.pager.page = page;
     this.getList(page);
+  }
+
+  loadImg(id : number) {
+    if(id == null || id == undefined){
+      return 'assets/img/lazyImage.jpg';
+    }
+    return `${this.apiUrl}/resource/image?id=${id}`;
   }
 }

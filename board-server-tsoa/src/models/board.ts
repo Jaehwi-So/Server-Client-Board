@@ -11,15 +11,24 @@ import {
     title: string;   
     content: string;  
     nick : string;
-    photo : string;
+    ridx : number;
   }  
+
+  export interface BoardFormModel{
+    id?: number;
+    title?: string;   
+    content?: string;  
+    nick? : string;
+    ridx? : number;
+  }  
+
 
   class Board extends Model{
     public readonly id!: number;
     public title!: string;   
     public content!: string;  
     public nick! : string;
-    public photo! : string;
+    public ridx! : number;
   }
     
   Board.init({
@@ -35,8 +44,8 @@ import {
         type: DataTypes.STRING(200),
         allowNull: true,
     },
-    photo: {
-      type: DataTypes.STRING(500),
+    ridx: {
+      type: DataTypes.INTEGER,
       allowNull: true,
     },
 

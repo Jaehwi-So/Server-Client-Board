@@ -2,7 +2,7 @@ import { Route, Tags, Controller, Request, Security, Get, Put, Post, Delete, Bod
 import ResponseModel from "../models/responseModel";
 import { insert, selectList, selectOne } from "../services/board";
 import { PageModel } from "../models/page";
-import { BoardModel } from "../models/board";
+import { BoardFormModel, BoardModel } from "../models/board";
 import HttpStatusCode from "../enum/httpStatusCode";
 import DefineCode from "../enum/defineCode";
 
@@ -56,13 +56,10 @@ export class BoardController extends Controller {
 
     @Security('jwt', [])
     @Post()
-    public insert_board(@Request() req: any, @Body() form: BoardModel) : Promise<ResponseModel> {
+    public insert_board(@Request() req: any, @Body() form: BoardFormModel) : Promise<ResponseModel> {
+        console.log('insert', form.content);
         return new Promise<ResponseModel>(async (resolve, reject) => {
-            //const fileUploadResult = await UploadUtil.single_upload.single('file')
-            //const url = `/img/${req.file.filename}`
-            const url = `/img/1234`
-            console.log(url);
-            insert(form, url)
+            insert(form)
             .then(result => {
                 resolve(result as ResponseModel);
             })

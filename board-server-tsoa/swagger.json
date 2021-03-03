@@ -69,8 +69,9 @@
 					"nick": {
 						"type": "string"
 					},
-					"photo": {
-						"type": "string"
+					"ridx": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
@@ -78,7 +79,7 @@
 					"title",
 					"content",
 					"nick",
-					"photo"
+					"ridx"
 				],
 				"type": "object",
 				"additionalProperties": true
@@ -333,6 +334,55 @@
 						}
 					}
 				}
+			}
+		},
+		"/resource/single": {
+			"post": {
+				"operationId": "Insert",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseModel"
+								}
+							}
+						},
+						"description": "Ok"
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/resource/image": {
+			"get": {
+				"operationId": "GetImage",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"additionalProperties": true,
+									"type": "object"
+								}
+							}
+						},
+						"description": "Ok"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/users/{userId}": {

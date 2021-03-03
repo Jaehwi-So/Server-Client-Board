@@ -1,7 +1,7 @@
 import Domain from "../models/domain";
 import ResponseModel from "../models/responseModel";
 import { v4 as uuid } from 'uuid';
-import Board, { BoardModel } from "../models/board";
+import Board, { BoardFormModel, BoardModel } from "../models/board";
 import { PageModel } from "../models/page";
 import HttpStatusCode from "../enum/httpStatusCode";
 
@@ -71,15 +71,15 @@ export const selectOne = async (id : number): Promise<ResponseModel>=> {
     });
 }
 
-export const insert = async (form : BoardModel, url : string): Promise<ResponseModel>=> {
+export const insert = async (form : BoardFormModel): Promise<ResponseModel>=> {
     return new Promise(async (resolve, reject) => {
         try {
-            const { title, content, nick } = form;
+            const { title, content, nick, ridx } = form;
             await Board.create({   //insert
                 title : title,
                 content : content,
                 nick : nick,
-                photo : url
+                ridx : ridx
             });
             resolve({
                 success : true,

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { buffer } from 'rxjs-compat/operator/buffer';
 import 'rxjs/add/operator/map';
+import { BoardModel } from 'src/app/models/BoardModel';
 import ResponseModel from 'src/app/models/ResponseModel';
 import { ApiService } from 'src/app/service/api.service';
 import { environment } from 'src/environments/environment';

@@ -46,17 +46,17 @@ app.use(sessionMiddleware);
 
 //server upload storage
 try {
-    fs.readdirSync('./src/uploads');
+    fs.readdirSync('resources');
 } 
 catch (error) {
     console.error('is null directory, now mkdir');
-    fs.mkdirSync('./src/uploads');
+    fs.mkdirSync('resources');
 }
 
 app.set('view engine', 'html'); //view engine
 //static path
 app.use(express.static(path.join(__dirname, './src/public')));
-app.use('/img', express.static(path.join(__dirname, './src/uploads')));
+app.use('/img', express.static(path.join(__dirname, 'resources')));
 
 //morgan option
 if(process.env.NODE_ENV === 'production'){
