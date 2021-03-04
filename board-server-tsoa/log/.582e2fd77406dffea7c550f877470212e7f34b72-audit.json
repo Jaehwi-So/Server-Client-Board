@@ -1,0 +1,14 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 30
+    },
+    "auditLog": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-tsoa\\log\\.582e2fd77406dffea7c550f877470212e7f34b72-audit.json",
+    "files": [
+        {
+            "date": 1614823116491,
+            "name": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-tsoa\\log\\app.log.2021-03-04",
+            "hash": "ff391f9f81bdac614f9e7410b6977200"
+        }
+    ]
+}

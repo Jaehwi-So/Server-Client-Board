@@ -4,6 +4,7 @@ import ResponseModel from "../models/responseModel";
 import { DomainModel } from "../models/domain";
 import HttpStatusCode from "../enum/httpStatusCode";
 import DefineCode from "../enum/defineCode";
+import logger from "../config/winston";
 
  
 @Route("domain")
@@ -15,6 +16,7 @@ export class DomainController extends Controller {
             const { host } = form;
             insertDomain(host)
             .then(result => {
+                logger.info(`[POST] [domain] insert domain`);
                 resolve(result as ResponseModel);
             })
             .catch(error => {
@@ -23,6 +25,7 @@ export class DomainController extends Controller {
             });       
         })
         .catch(error => {
+          logger.error(`[POST] [domain] Failed to insert domain: ${error.message}`);
           return {
               success: false,
               message : error.message,

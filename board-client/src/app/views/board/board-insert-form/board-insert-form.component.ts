@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BoardModel } from 'src/app/models/BoardModel';
+import { BoardModel, BoardRequestModel } from 'src/app/models/BoardModel';
 import ResponseModel from 'src/app/models/ResponseModel';
 import { ApiService } from 'src/app/service/api.service';
 import { environment } from 'src/environments/environment';
@@ -17,7 +17,7 @@ export class BoardInsertFormComponent implements OnInit {
   imageSrc : string | ArrayBuffer = '#';
   formData : FormData;
   insertForm: FormGroup;  //여러개의 FormControl을 다루기 위해 FormGroup 사용
-  boardRequestModel : BoardModel;
+  boardRequestModel : BoardRequestModel;
 
 
   constructor(private apiService : ApiService, private fb: FormBuilder, private router : Router) { 

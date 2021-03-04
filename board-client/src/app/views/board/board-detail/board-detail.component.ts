@@ -36,4 +36,11 @@ export class BoardDetailComponent implements OnInit {
 
   }
 
+  loadImg(id : number) {
+    if(id == null || id == undefined){
+      return 'assets/img/lazyImage.jpg';
+    }
+    return `${this.apiUrl}/resource/image?id=${id}`;
+  }
+
 }

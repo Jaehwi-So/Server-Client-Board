@@ -4,6 +4,15 @@ export interface BoardModel{
   content?: string;  
   nick? : string;
   ridx? : number;
+  createdAt? : Date;
+}  
+
+export interface BoardRequestModel{
+  id?: number;
+  title?: string;   
+  content?: string;  
+  nick? : string;
+  ridx? : number;
 }  
 
 

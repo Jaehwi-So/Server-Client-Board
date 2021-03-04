@@ -5,6 +5,7 @@ import { get_token } from "../services/token";
 import HttpStatusCode from "../enum/httpStatusCode";
 import { JwtAuthModel } from "../models/jwtAuth";
 import DefineCode from "../enum/defineCode";
+import logger from "../config/winston";
 
  
 @Route("auth")
@@ -28,7 +29,7 @@ export class AuthController extends Controller {
             })
         })
         .catch(error => {
-            console.log(error);
+            logger.error(`[POST] [auth] [token] Failed to get token: ${error.message}`);
             return {
                 success: false,
                 message : error.message,

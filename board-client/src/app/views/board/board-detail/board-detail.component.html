@@ -9,7 +9,7 @@
       <a [routerLink]="['/board/list']" [queryParams]="{ page: page }" [routerLinkActive]="['active']" class="stretched-link">Continue reading</a>
     </div>
     <div class="col-md-5 d-flex d-lg-block">
-      <img *ngIf="board" src="{{apiUrl}}{{board.photo}}" width=100% height="500">
+      <img *ngIf="board" src="{{loadImg(board.ridx)}}" width=100% height="500">
 
     </div>
   </div>

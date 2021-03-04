@@ -10,6 +10,7 @@ import { handleFile, insertResource, selectOne } from "../services/resource";
 import { ResourceModel } from "../models/resource";
 import mime from 'mime';
 import fs from 'fs';
+import logger from "../config/winston";
 
  
 @Route("resource")
@@ -33,6 +34,7 @@ export class ResourceController extends Controller {
                 mimeType : mimeType
             } as ResourceModel)
             .then(result => {
+                logger.info(`[POST] [resource] [single] insert resource`);
                 resolve(result as ResponseModel);
             })
             .catch(error => {
@@ -41,6 +43,7 @@ export class ResourceController extends Controller {
             });       
         })
         .catch(error => {
+          logger.error(`[POST] [resource] [single] Faild to insert resource : ${error.message}`);
           return {
               success: false,
               message : error.message,
@@ -68,6 +71,7 @@ export class ResourceController extends Controller {
                 const filestream = fs.createReadStream(path);
                 filestream.pipe(response);        
                 return await filestream.on('end', () => {
+                    logger.info(`[GET] [resource] [image] [id : ${id}] get image resource`);
                     response.end();
                     return;
                 })     
@@ -79,7 +83,7 @@ export class ResourceController extends Controller {
             });       
         })
         .catch(error => {
-            console.log(error);
+            logger.error(`[GET] [resource] [image] [id : ${id}] Faild to get image resource : ${error.message}`);
             this.setStatus(HttpStatusCode.INTERNAL_SERVER_ERROR);
             return {
                 success: false,

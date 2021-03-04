@@ -12,6 +12,11 @@ import expressSession from 'express-session';
 import path from 'path';
 import cors from 'cors';
 import { Router } from 'express';
+import expressip from 'express-ip';
+
+import winston, { stream } from './config/winston';
+import moment from 'moment-timezone';
+import logger from './config/winston';
 
 export const app = express();
 dotenv.config();
@@ -23,6 +28,15 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+app.use(expressip().getIpInfoMiddleware)
+
+//morgan logger
+morgan.token('date', () => {
+  return moment().tz('Asia/Seoul').format();
+})
+app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :response-time ms :res[content-length] ":referrer" ":user-agent"', {
+  stream
+}));
 
 dotenv.config();    //dotenv config
 //passportConfig();   //passport config

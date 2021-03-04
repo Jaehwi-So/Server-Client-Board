@@ -54,33 +54,31 @@
 				"type": "object",
 				"additionalProperties": true
 			},
-			"BoardModel": {
+			"BoardFormModel": {
 				"properties": {
 					"id": {
 						"type": "number",
-						"format": "double"
+						"format": "double",
+						"nullable": true
 					},
 					"title": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"content": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"nick": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"ridx": {
 						"type": "number",
-						"format": "double"
+						"format": "double",
+						"nullable": true
 					}
 				},
-				"required": [
-					"id",
-					"title",
-					"content",
-					"nick",
-					"ridx"
-				],
 				"type": "object",
 				"additionalProperties": true
 			},
@@ -102,47 +100,6 @@
 					"id",
 					"host"
 				],
-				"type": "object",
-				"additionalProperties": true
-			},
-			"User": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"email": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"status": {
-						"type": "string",
-						"enum": [
-							"Happy",
-							"Sad"
-						],
-						"nullable": true
-					},
-					"phoneNumbers": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"id",
-					"email",
-					"name",
-					"phoneNumbers"
-				],
-				"type": "object",
-				"additionalProperties": true
-			},
-			"UserCreationParams": {
-				"properties": {},
 				"type": "object",
 				"additionalProperties": true
 			}
@@ -268,7 +225,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/BoardModel"
+								"$ref": "#/components/schemas/BoardFormModel"
 							}
 						}
 					}
@@ -383,67 +340,6 @@
 						}
 					}
 				]
-			}
-		},
-		"/users/{userId}": {
-			"get": {
-				"operationId": "GetUser",
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/User"
-								}
-							}
-						},
-						"description": "Ok"
-					}
-				},
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "userId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "query",
-						"name": "name",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/users": {
-			"post": {
-				"operationId": "CreateUser",
-				"responses": {
-					"201": {
-						"content": {
-							"application/json": {}
-						},
-						"description": "Created"
-					}
-				},
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/UserCreationParams"
-							}
-						}
-					}
-				}
 			}
 		}
 	},
