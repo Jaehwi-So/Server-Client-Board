@@ -1,0 +1,14 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 30
+    },
+    "auditLog": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-webpack-dist\\log\\.08b88f2abe065c63f57811296415ec45b2de7ec1-audit.json",
+    "files": [
+        {
+            "date": 1615526786135,
+            "name": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-webpack-dist\\log\\app.log.2021-03-12",
+            "hash": "d4cd240e70324a426db3fc5dfa726cca"
+        }
+    ]
+}

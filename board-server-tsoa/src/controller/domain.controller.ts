@@ -1,5 +1,5 @@
 import { Route, Tags, Controller, Request, Security, Get, Put, Post, Delete, Body, Query, SuccessResponse, Path } from "tsoa";
-import { insertDomain } from "../services/domain";
+import { insertDomain, selectAllDomain } from "../services/domain";
 import ResponseModel from "../models/responseModel";
 import { DomainModel } from "../models/domain";
 import HttpStatusCode from "../enum/httpStatusCode";
@@ -26,6 +26,29 @@ export class DomainController extends Controller {
         })
         .catch(error => {
           logger.error(`[POST] [domain] Failed to insert domain: ${error.message}`);
+          return {
+              success: false,
+              message : error.message,
+              code: error.message.match(/(\[[0-9]{3}\])(\w+)/) && error.message.match(/(\[[0-9]{3}\])(\w+)/).length === 3 ? error.message.match(/(\[[0-9]{3}\])(\w+)/)[1] : DefineCode.ERROR_CODE_OTHER
+          } as ResponseModel
+        });
+    };
+
+    @Get()
+    public select_all (@Request() req: any) : Promise<ResponseModel> {
+        return new Promise<ResponseModel>((resolve, reject) => {
+            const domain = selectAllDomain()
+            .then(result => {
+                logger.info(`[GET] [domain] selectAll domain`);
+                resolve(result as ResponseModel);
+            })
+            .catch(error => {
+                console.log(error);
+                reject(error);
+            });       
+        })
+        .catch(error => {
+          logger.error(`[GET] [domain] Failed to selectAll domain: ${error.message}`);
           return {
               success: false,
               message : error.message,

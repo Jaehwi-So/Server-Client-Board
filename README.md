@@ -31,7 +31,7 @@
 - 파일 관리
     * morgan과 File Stream을 이용하여 리소스 관리
 - Webpack
-    * (Webpack을 통한 모듈 압축 예정)
+    * Webpack을 통한 모듈 압축
 - Docker
     * (배포를 위한 이미지 Dockerlizing 예정)
 - Monitoring
@@ -47,5 +47,4 @@
     * 앵귤러와 타입스크립트는 짝궁
 - Bootstrap, CoreUI
     * 디자인에 자신이 없다면 부트스트랩 짱
-- Webpack
-    * (Webpack을 통한 모듈 압축 예정)
+

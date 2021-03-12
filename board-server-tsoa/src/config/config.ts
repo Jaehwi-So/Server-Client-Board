@@ -15,10 +15,10 @@ interface IConfigGroup {
 }
 const config: IConfigGroup = {
   "development": {
-    "username": "root",
-    "password": process.env.DB_PASSWORD!,
+    "username": process.env.DB_USERNAME || "root",
+    "password": process.env.DB_PASSWORD || "root",
     "database": "board-system",
-    "host": "127.0.0.1",
+    "host": process.env.DB_HOST || "127.0.0.1",
     "dialect": "mysql",
     "dialectOptions": {
       "charset": "utf8mb4", 
@@ -28,10 +28,10 @@ const config: IConfigGroup = {
     "timezone": "+09:00",
   },
   "test": {
-    "username": "root",
-    "password": process.env.DB_PASSWORD!,
-    "database": "msgamble",
-    "host": "127.0.0.1",
+    "username": process.env.DB_USERNAME || "root",
+    "password": process.env.DB_PASSWORD || "root",
+    "database": "board-system",
+    "host": process.env.DB_HOST || "127.0.0.1",
     "dialect": "mysql",
     "dialectOptions": {
       "charset": "utf8mb4", 
@@ -41,10 +41,10 @@ const config: IConfigGroup = {
     "timezone": "+09:00",
   },
   "production": {
-    "username": "root",
-    "password": process.env.DB_PASSWORD!,
-    "database": "msgamble",
-    "host": "mariadb",
+    "username": process.env.DB_USERNAME || "root",
+    "password": process.env.DB_PASSWORD || "root",
+    "database": "board-system",
+    "host": process.env.DB_HOST || 'localhost',
     "port": 3306,
     "dialect": "mysql",
     "dialectOptions": {

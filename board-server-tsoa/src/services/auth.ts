@@ -24,12 +24,8 @@ export function expressAuthentication(req: express.Request, securityName: string
 export const jwtAuth = (req: express.Request, res: express.Response, scopes?: string[], _token?: string) => {
     return new Promise<any>((resolve, reject) => {
         try{
-            console.log(req.get('Authorization'));
-            console.log(req.get('Bearer '));
             const token = (req.get('Authorization') || 'Bearer ').split('Bearer ')[1] || (_token as string);
-            console.log('1', token);
             const secret = `${process.env.JWT_SECRET}`;
-            console.log('2', secret);
             const decoded = jwt.verify(token, secret);
             
             console.log('토큰', token, secret, decoded);

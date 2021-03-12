@@ -11,7 +11,6 @@ import cookieParser from 'cookie-parser';
 import expressSession from 'express-session';
 import path from 'path';
 import cors from 'cors';
-import { Router } from 'express';
 import expressip from 'express-ip';
 
 import winston, { stream } from './config/winston';
@@ -20,6 +19,7 @@ import logger from './config/winston';
 
 export const app = express();
 dotenv.config();
+
 
 // Use body parser to read sent json payloads
 app.use(
@@ -30,15 +30,6 @@ app.use(
 app.use(bodyParser.json());
 app.use(expressip().getIpInfoMiddleware)
 
-//morgan logger
-morgan.token('date', () => {
-  return moment().tz('Asia/Seoul').format();
-})
-app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :response-time ms :res[content-length] ":referrer" ":user-agent"', {
-  stream
-}));
-
-dotenv.config();    //dotenv config
 //passportConfig();   //passport config
 
 //cookie-parser
@@ -63,55 +54,67 @@ try {
     fs.readdirSync('resources');
 } 
 catch (error) {
-    console.error('is null directory, now mkdir');
+    winston.info('is null directory, now mkdir');
     fs.mkdirSync('resources');
 }
 
-app.set('view engine', 'html'); //view engine
+//view engine
+app.set('view engine', 'html');
 //static path
 app.use(express.static(path.join(__dirname, './src/public')));
 app.use('/img', express.static(path.join(__dirname, 'resources')));
 
-//morgan option
+//morgan logger option
+morgan.token('date', () => {
+  return moment().tz('Asia/Seoul').format();
+})
+app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :response-time ms :res[content-length] ":referrer" ":user-agent"', {
+  stream
+}));
 if(process.env.NODE_ENV === 'production'){
-    app.use(morgan('combined'));
+  app.use(morgan('combined'));
 }
 else{
-    app.use(morgan('dev'));
+  app.use(morgan('dev'));
 }
+
 //port, host setting 
 app.set('port', process.env.PORT || 8080);  
-app.set('host', `${process.env.HOST}` || '0.0.0.0');  
+app.set('host', `${process.env.HOST}` || 'localhost');  
+winston.info(`port set : ${app.get('port')}, host set : ${app.get('host')}`);
 
 
 //Database Connection
 const { sequelize } = require('./models');
 sequelize.sync({ force: false })
 .then(() => {
-    console.log('Connect MariaDB!');
+    winston.info('Connect MariaDB!');
 })
 .catch((err : any) => {
-    console.error('err', err);
+    winston.error(`[Error] Connect MariaDB`, err);
 });
 
+console.log(path.join(__dirname, 'resources'));
 //Swagger config
 try {
     switch (process.env.NODE_ENV) {
       case 'development':
           var swaggerDoc = require('../swagger.json');
           app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+          winston.info('Swagger config success : development mode');
         break;
       case 'production':
           var swaggerPath = require('../swagger.json');
-          var swaggerDoc = JsonFile.readFileSync(swaggerPath.default)
+          var swaggerDoc = JsonFile.readFileSync(`./dist/${swaggerPath.default}`)
           app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+          winston.info('Swagger config success : production mode');
         break;
       default:
-        console.log("fail");
+        winston.error(`[Error] Fail to swagger config`);
         break;
     }
 } catch (err) {
-
+  winston.error(`[Error] Fail to swagger config`, err);
 }
 
 //Routes config

@@ -71,7 +71,10 @@
     "resolveJsonModule": true, /* For load json file */
   },
   "include": [
-    "src/**/*", //"./typings.d.ts"
+    "src/**/*", "./typings.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ],
   "files": [
     "./typings.d.ts"

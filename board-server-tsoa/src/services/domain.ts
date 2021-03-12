@@ -33,3 +33,22 @@ export const insertDomain = async (host : string): Promise<ResponseModel>=> {
     })
     
 }
+
+export const selectAllDomain = async (): Promise<ResponseModel>=> {
+    return new Promise(async (resolve, reject) => {
+        try{
+            const data = await Domain.findAll({
+            });
+            resolve({
+                success : true,
+                message : "도메인 목록을 불러왔습니다.",
+                data : {
+                    list : data,
+                },
+                code : HttpStatusCode.OK
+            } as ResponseModel);       
+        } catch(error){
+            reject(error);       
+        }
+    });
+}
