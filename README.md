@@ -27,9 +27,9 @@
     * (클러스터링 : 싱글 스레드의 한계점 보완을 위해 pm2를 이용하여 멀티 프로세싱을 가능하도록 할 것임. 추가 예정)
     * (Redis : 클러스터링에 따른 세션 공유와 빠른 리소스 로딩 역할을 위해서 Redis DB 추가 예정)
 - 로깅
-    * Winston을 이용하여 로그 파일 형태로 저장
+    * Winston과 morgan을 이용하여 로그 파일 형태로 저장
 - 파일 관리
-    * morgan과 File Stream을 이용하여 리소스 관리
+    * multer과 File Stream을 이용하여 리소스 관리
 - Webpack
     * Webpack을 통한 모듈 압축
 - Docker
