@@ -54,7 +54,7 @@ try {
     fs.readdirSync('resources');
 } 
 catch (error) {
-    winston.info('is null directory, now mkdir');
+    winston.info('resources is null directory, now mkdir');
     fs.mkdirSync('resources');
 }
 
@@ -63,6 +63,7 @@ app.set('view engine', 'html');
 //static path
 app.use(express.static(path.join(__dirname, './src/public')));
 app.use('/img', express.static(path.join(__dirname, 'resources')));
+
 
 //morgan logger option
 morgan.token('date', () => {
@@ -94,6 +95,16 @@ sequelize.sync({ force: false })
     winston.error(`[Error] Connect MariaDB`, err);
 });
 
+//Allow Cors
+app.use(cors({
+  allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token", "authorization", "Access-Control-Allow-Origin"],
+  methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
+  origin: ['*', 'http://localhost:4200', 'http://localhost:4201', 'http://localhost:8080'],
+  credentials: true,
+  preflightContinue: false,
+}));
+
+
 console.log(path.join(__dirname, 'resources'));
 //Swagger config
 try {
@@ -117,9 +128,15 @@ try {
   winston.error(`[Error] Fail to swagger config`, err);
 }
 
-//Routes config
-app.use(cors({
-  credentials: true,
-}));
 
+//Routes config
 RegisterRoutes(app);
+
+app.get('/', (req: express.Request, res: express.Response) => {
+  if(process.env.NODE_ENV === 'production'){
+    res.sendFile(path.join(__dirname, './public', "index.html"));
+  }
+  else{
+  res.sendFile(path.join(__dirname, './src/public', "index.html"));
+  }
+});
