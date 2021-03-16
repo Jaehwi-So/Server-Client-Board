@@ -12,10 +12,10 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./board-detail.component.css']
 })
 export class BoardDetailComponent implements OnInit {
-  private id : string;
-  private apiUrl = environment.apiHost;
-  private board : BoardModel;
-  private page : number = 0;
+  id : string;
+  apiUrl = environment.apiHost;
+  board : BoardModel;
+  page : number = 0;
   
   constructor(private route : ActivatedRoute, private apiService : ApiService) { 
     this.id = this.route.snapshot.paramMap.get('id');

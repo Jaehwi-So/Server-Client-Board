@@ -61,7 +61,7 @@ catch (error) {
 //view engine
 app.set('view engine', 'html');
 //static path
-app.use(express.static(path.join(__dirname, './src/public')));
+app.use(express.static(path.join(__dirname, './www')));
 app.use('/img', express.static(path.join(__dirname, 'resources')));
 
 
@@ -134,9 +134,9 @@ RegisterRoutes(app);
 
 app.get('/', (req: express.Request, res: express.Response) => {
   if(process.env.NODE_ENV === 'production'){
-    res.sendFile(path.join(__dirname, './public', "index.html"));
+    res.sendFile(path.join(__dirname, './www', "index.html"));
   }
   else{
-  res.sendFile(path.join(__dirname, './src/public', "index.html"));
+  res.sendFile(path.join(__dirname, './www', "index.html"));
   }
 });

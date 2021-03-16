@@ -1,4 +1,4 @@
-const srcPath = "./src/public";
+const srcPath = "./src/www";
 const dist = `board-server-webpack-dist`;
 const fse = require("fs-extra");
 const path = require("path");
@@ -14,7 +14,7 @@ console.log(`
                                                               
                                                               
                                                                      `);                             
-const destPath = `../${dist}/dist/public`;                         
+const destPath = `../${dist}/dist/www`;                         
 fse.copy(srcPath, destPath, err => {
   if (err) {
     console.log("copy error", err.message);

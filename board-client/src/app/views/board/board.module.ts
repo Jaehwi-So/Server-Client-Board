@@ -9,7 +9,6 @@ import { BoardComponent } from './board.component';
 import { BoardRoutingModule } from './board-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
-import { LazyLoadImageDirective, LazyLoadImageModule } from 'ng-lazyload-image';
 
 
 @NgModule({
@@ -27,7 +26,6 @@ import { LazyLoadImageDirective, LazyLoadImageModule } from 'ng-lazyload-image';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    LazyLoadImageModule,
   ],
   exports: [
     BoardComponent,

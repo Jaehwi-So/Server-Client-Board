@@ -17,7 +17,7 @@ const config: IConfigGroup = {
   "development": {
     "username": process.env.DB_USERNAME || "root",
     "password": process.env.DB_PASSWORD || "root",
-    "database": "board-system",
+    "database": process.env.DATABASE_NAME || "board-system",
     "host": process.env.DB_HOST || "127.0.0.1",
     "dialect": "mysql",
     "dialectOptions": {
@@ -30,7 +30,7 @@ const config: IConfigGroup = {
   "test": {
     "username": process.env.DB_USERNAME || "root",
     "password": process.env.DB_PASSWORD || "root",
-    "database": "board-system",
+    "database": process.env.DATABASE_NAME || "board-system",
     "host": process.env.DB_HOST || "127.0.0.1",
     "dialect": "mysql",
     "dialectOptions": {
@@ -43,9 +43,9 @@ const config: IConfigGroup = {
   "production": {
     "username": process.env.DB_USERNAME || "root",
     "password": process.env.DB_PASSWORD || "root",
-    "database": "board-system",
+    "database": process.env.DATABASE_NAME || "board-system",
     "host": process.env.DB_HOST || 'localhost',
-    "port": 3306,
+    "port": process.env.DB_PORT || 3306,
     "dialect": "mysql",
     "dialectOptions": {
       "charset": "utf8mb4", 

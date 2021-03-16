@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { HOST } from '@angular/core/src/render3/interfaces/view';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BoardModel } from 'src/app/models/BoardModel';
 import PageModel from 'src/app/models/PageModel';
 import ResponseModel from 'src/app/models/ResponseModel';
 import { ApiService } from 'src/app/service/api.service';
@@ -13,9 +14,9 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./board-list.component.css']
 })
 export class BoardListComponent implements OnInit{
-  private apiUrl : string = environment.apiHost;
-  private boards;
-  private pager : PageModel;
+  apiUrl : string = environment.apiHost;
+  boards : BoardModel[];
+  pager : PageModel;
 
   constructor(private route : ActivatedRoute, private apiService : ApiService, private router : Router) { 
 
