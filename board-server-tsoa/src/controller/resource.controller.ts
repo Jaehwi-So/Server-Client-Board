@@ -1,14 +1,10 @@
 import { Route, Tags, Controller, Request, Security, Get, Put, Post, Delete, Body, Query, SuccessResponse, Path } from "tsoa";
-import { insertDomain } from "../services/domain";
 import ResponseModel from "../models/responseModel";
-import { DomainModel } from "../models/domain";
 import HttpStatusCode from "../enum/httpStatusCode";
 import DefineCode from "../enum/defineCode";
 import express from "express";
-import multer from "multer";
 import { handleFile, insertResource, selectOne } from "../services/resource";
 import { ResourceModel } from "../models/resource";
-import mime from 'mime';
 import fs from 'fs';
 import logger from "../config/winston";
 

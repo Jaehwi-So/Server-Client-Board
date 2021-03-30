@@ -20,7 +20,7 @@ export const get_token = async (clientSecret : string): Promise<JwtAuthModel>=> 
             const token = jwt.sign({
                 name : "sjh"
                 }, secret, {
-                expiresIn: '1m', // 1분
+                expiresIn: process.env.TOKEN_EXPIRED_TIME || '1m', // 1분
                 issuer: 'board-service',
             });
             resolve({

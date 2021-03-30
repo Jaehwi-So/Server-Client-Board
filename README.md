@@ -7,6 +7,14 @@
 -----
 
 # 실행 방법
+
+## 패키지 전역 설치
++ npm install -g @angular/cli@7.3.9
++ npm install -g @node/gyp@7.1.2
++ npm install -g ts-node@9.1.1
++ npm install -g nodemon@2.0.6
++ npm install -g express@4.17.1
+
 ## 클라이언트 빌드 (board-client)
 1. 패키지 설치
     - npm install
@@ -21,7 +29,9 @@
 2. 환경 변수 설정
     - /board-server-tsoa/.env && /board-server-tsoa/.env.production 환경변수 설정
 3. 클라이언트 빌드 후 /board-server-tsoa/src/www 디렉터리에 클라이언트에서 빌드한 Webpack 결과물 확인
-4. 서버 빌드 및 Webpack 번들링
+4. 서버 실행
+    - npm start
+5. 서버 빌드 및 Webpack 번들링
     - npm run prod-deploy
 
 ## Webpack 결과물 실행 (board-server-webpack-dist)

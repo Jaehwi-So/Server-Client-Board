@@ -6,19 +6,9 @@
     "auditLog": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-webpack-dist\\log\\.08b88f2abe065c63f57811296415ec45b2de7ec1-audit.json",
     "files": [
         {
-            "date": 1615526786135,
-            "name": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-webpack-dist\\log\\app.log.2021-03-12",
-            "hash": "d4cd240e70324a426db3fc5dfa726cca"
-        },
-        {
-            "date": 1615766966613,
-            "name": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-webpack-dist\\log\\app.log.2021-03-15",
-            "hash": "198c825013c21fd73c2c20268c89c422"
-        },
-        {
-            "date": 1615856300246,
-            "name": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-webpack-dist\\log\\app.log.2021-03-16",
-            "hash": "055777c940470a53291ff52c5ab29640"
+            "date": 1617069417300,
+            "name": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-webpack-dist\\log\\app.log.2021-03-30",
+            "hash": "a16156bb3fa9f6c05cbaf00050a62e42"
         }
     ]
 }

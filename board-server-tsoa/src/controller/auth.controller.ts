@@ -1,6 +1,5 @@
 import { Route, Tags, Controller, Request, Security, Get, Put, Post, Delete, Body, Query, SuccessResponse, Path } from "tsoa";
 import ResponseModel from "../models/responseModel";
-import { PageModel } from "../models/page";
 import { get_token } from "../services/token";
 import HttpStatusCode from "../enum/httpStatusCode";
 import { JwtAuthModel } from "../models/jwtAuth";

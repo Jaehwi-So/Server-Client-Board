@@ -1,5 +1,7 @@
 import express from "express";
 import jwt from 'jsonwebtoken';
+import winston from "winston/lib/winston/config";
+import logger from "../config/winston";
 import DefineCode from "../enum/defineCode";
 import HttpStatusCode from "../enum/httpStatusCode";
 import ResponseModel from "../models/responseModel";
@@ -28,24 +30,22 @@ export const jwtAuth = (req: express.Request, res: express.Response, scopes?: st
             const secret = `${process.env.JWT_SECRET}`;
             const decoded = jwt.verify(token, secret);
             
-            console.log('토큰', token, secret, decoded);
             if(decoded){
-                console.log('인증 성공', decoded);
+                logger.info(`Token Auth Success : ${token}`)
                 resolve({});
             }
             else{
-                console.log('인증 실패');
                 reject(new Error(`${DefineCode.ERROR_CODE_AUTH_FAILED}Empty decoded refresh token.`));
             }
         }
         catch(error){
-            console.log('인증 실패!');
             console.log(error);
             reject(error);
         }
     })
     .catch(error => {
         if(error.name == 'TokenExpiredError'){
+            logger.info(`Token Auth Faild, Token Expired : ${error.message}`)
             res.status(419);
             res.send({
                 success: false,
@@ -54,6 +54,7 @@ export const jwtAuth = (req: express.Request, res: express.Response, scopes?: st
             } as ResponseModel)
             return;
         }
+        logger.warn(`Token Auth Faild, Unauthorized : ${error.message}`)
         res.status(HttpStatusCode.UNAUTHORIZED);
         res.send({
             success: false,

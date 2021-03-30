@@ -15,6 +15,7 @@ export class ApiService {
   constructor(private http : HttpClient, private jwtHelper: JwtHelperService) {
     this.apiHost = environment.apiHost;
     this.http = http;
+    console.log(this.apiHost);
   }
 
   //토큰 발급
@@ -27,6 +28,7 @@ export class ApiService {
   }
   //클라이언트 단에 저장된 토큰 GET
   getToken(): string {
+    console.log("getToken()", localStorage.getItem(this.TOKEN_NAME));
     return localStorage.getItem(this.TOKEN_NAME);
   }
 
@@ -44,6 +46,7 @@ export class ApiService {
 
   //클라이언트 단의 토큰 유효기간 체크
   isTokenExpired(token: string) {
+    console.log("tokenExpired");
     return this.jwtHelper.isTokenExpired(token);
   }
 
@@ -51,10 +54,14 @@ export class ApiService {
   public get_api_request<T> (url : string) : Observable<T>{
     try{
       if(this.getToken() == undefined || this.getToken() == null || this.isTokenExpired(this.getToken())){
+        console.log('1');
         return new Observable<T>((observer: Observer<T>) => {
+          console.log('2');
           this.token_signin() //1. 토큰 발급
           .subscribe((tokenAuth : TokenAuthModel) => {  //2. 토큰 발급 완료 시 토큰 세팅
+            console.log('3');
             this.setToken(tokenAuth.token);
+            console.log('4');
             this.http.get<T>(url, { //3. 서버에 HTTP 요청
               headers: {Authorization: `Bearer ${this.getToken() || ''}`}
             }).subscribe((resultModel : T) => { 
