@@ -8,6 +8,10 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { BoardModule } from './views/board/board.module';
 import { SharedModule } from './shared/shared.module';
 import { MainComponent } from './views/main/main.component';
+
+export function jwtTokenGetter(){
+  return localStorage.getItem('token');
+}
 @NgModule({
   declarations: [ //컴포넌트, 디렉티브, 파이프의 리스트를 선언. 모듈에 선언된 구성요소는 모듈 내에서 사용 가능하다.
     AppComponent,
@@ -19,14 +23,10 @@ import { MainComponent } from './views/main/main.component';
     HttpClientModule,    
     JwtModule.forRoot({
       config: {
-        // tokenGetter: () => {
-        //   return localStorage.getItem('access_token');
-        // },
-        // whitelistedDomains: ['localhost:4200'],
-        // blacklistedRoutes: []
+         tokenGetter: jwtTokenGetter,
+         allowedDomains: ['localhost:4200', 'localhost:8080'],
       }
     }),
-    /* */
     BoardModule,  
     SharedModule,
   ],

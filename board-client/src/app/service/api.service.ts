@@ -20,7 +20,7 @@ export class ApiService {
 
   //토큰 발급
   token_signin() {
-    console.log('발급');
+    console.log('발급', this.apiHost);
     return this.http.post<TokenAuthModel>(`${this.apiHost}/auth/token`, {
         'origin': environment.clientHost,
         'clientSecret': environment.clientSecret,
