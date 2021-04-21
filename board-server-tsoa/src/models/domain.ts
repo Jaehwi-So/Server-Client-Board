@@ -7,7 +7,6 @@ import { sequelize } from './sequelize';
 import Sequelize2 from 'sequelize';
     
   export interface DomainModel{
-    id: number;
     host: string;
     clientSecret?: string;
   }

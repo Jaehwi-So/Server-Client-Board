@@ -12,7 +12,7 @@
 
       <div class="col-sm-6">
         <label for="lastName" class="form-label">닉네임</label>
-        <input type="nick" class="form-control" id="nick" formControlName="nick" required>
+        <input type="text" class="form-control" id="nick" formControlName="nick" required>
         <div class="invalid-feedback">
           <app-form-handler *ngIf="insertForm.get('nick').errors" [formGroupErrors]='insertForm.get("nick").errors'></app-form-handler>
         </div>
@@ -20,7 +20,7 @@
 
       <div class="col-12">
         <div class="md-form amber-textarea active-amber-textarea-2">
-          <textarea id="form16" class="md-textarea form-control" rows="15" id="content" formControlName="content" required></textarea>
+          <textarea id="content" class="md-textarea form-control" rows="15" id="content" formControlName="content" required></textarea>
           <div class="invalid-feedback">
             <app-form-handler *ngIf="insertForm.get('content').errors" [formGroupErrors]='insertForm.get("content").errors'></app-form-handler>
           </div>

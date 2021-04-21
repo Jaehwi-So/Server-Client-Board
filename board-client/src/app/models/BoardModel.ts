@@ -14,6 +14,3 @@ export interface BoardRequestModel{
   nick? : string;
   ridx? : number;
 }  
-
-
-  

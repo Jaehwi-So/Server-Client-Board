@@ -6,28 +6,6 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"JwtAuthModel": {
-				"properties": {
-					"code": {
-						"type": "number",
-						"format": "double"
-					},
-					"message": {
-						"type": "string"
-					},
-					"token": {
-						"additionalProperties": true,
-						"type": "object",
-						"nullable": true
-					}
-				},
-				"required": [
-					"code",
-					"message"
-				],
-				"type": "object",
-				"additionalProperties": true
-			},
 			"ResponseModel": {
 				"properties": {
 					"success": {
@@ -50,6 +28,26 @@
 					"message",
 					"data",
 					"code"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
+			"UserReqModel": {
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"nick": {
+						"type": "string",
+						"nullable": true
+					}
+				},
+				"required": [
+					"email",
+					"password"
 				],
 				"type": "object",
 				"additionalProperties": true
@@ -84,10 +82,6 @@
 			},
 			"DomainModel": {
 				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
 					"host": {
 						"type": "string"
 					},
@@ -97,7 +91,6 @@
 					}
 				},
 				"required": [
-					"id",
 					"host"
 				],
 				"type": "object",
@@ -131,7 +124,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/JwtAuthModel"
+									"$ref": "#/components/schemas/ResponseModel"
 								}
 							}
 						},
@@ -145,6 +138,34 @@
 						"application/json": {
 							"schema": {
 								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/login": {
+			"post": {
+				"operationId": "Login_user",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseModel"
+								}
+							}
+						},
+						"description": "Ok"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserReqModel"
 							}
 						}
 					}
@@ -232,6 +253,79 @@
 				}
 			}
 		},
+		"/board/na": {
+			"get": {
+				"operationId": "Select_list_na",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseModel"
+								}
+							}
+						},
+						"description": "Ok"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "maxSize",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "Insert_board_na",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseModel"
+								}
+							}
+						},
+						"description": "Ok"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/BoardFormModel"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/board/{id}": {
 			"get": {
 				"operationId": "Select_one",
@@ -265,9 +359,38 @@
 				]
 			}
 		},
+		"/board/na/{id}": {
+			"get": {
+				"operationId": "Select_one_na",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseModel"
+								}
+							}
+						},
+						"description": "Ok"
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
 		"/domain": {
 			"post": {
-				"operationId": "Insert",
+				"operationId": "Insert_domain",
 				"responses": {
 					"200": {
 						"content": {
@@ -312,7 +435,7 @@
 		},
 		"/resource/single": {
 			"post": {
-				"operationId": "Insert",
+				"operationId": "Insert_resource",
 				"responses": {
 					"200": {
 						"content": {
@@ -357,6 +480,34 @@
 						}
 					}
 				]
+			}
+		},
+		"/user": {
+			"post": {
+				"operationId": "Insert_user",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseModel"
+								}
+							}
+						},
+						"description": "Ok"
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserReqModel"
+							}
+						}
+					}
+				}
 			}
 		}
 	},

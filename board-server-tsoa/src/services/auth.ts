@@ -18,6 +18,8 @@ export function expressAuthentication(req: express.Request, securityName: string
     switch (securityName) {
         case 'jwt':
             return jwtAuth(req, res, scopes);
+        case 'jwtLogin':
+            return jwtLoginAuth(req, res, scopes);
         default:
             return noneAuth(req, res);
     }
@@ -77,4 +79,46 @@ export const noneAuth = (req: express.Request, res: express.Response) => {
         } as ResponseModel)
     });
 }
+
+export const jwtLoginAuth = (req: express.Request, res: express.Response, scopes?: string[], _token?: string) => {
+    return new Promise<any>((resolve, reject) => {
+        try{
+            const token = (req.get('Authorization') || 'Bearer ').split('Bearer ')[1] || (_token as string);
+            const secret = `${process.env.JWT_SECRET}`;
+            const decoded = jwt.verify(token, secret);
+            
+            if(decoded){
+                logger.info(`Token Auth Success : ${token}`)
+                resolve({});
+            }
+            else{
+                reject(new Error(`${DefineCode.ERROR_CODE_AUTH_FAILED}Empty decoded refresh token.`));
+            }
+        }
+        catch(error){
+            console.log(error);
+            reject(error);
+        }
+    })
+    .catch(error => {
+        if(error.name == 'TokenExpiredError'){
+            logger.info(`Token Auth Faild, Token Expired : ${error.message}`)
+            res.status(419);
+            res.send({
+                success: false,
+                message: error.message,
+                code: error.message.match(/(\[[0-9]{3}\])(\w+)/) && error.message.match(/(\[[0-9]{3}\])(\w+)/).length === 3 ? error.message.match(/(\[[0-9]{3}\])(\w+)/)[1] : DefineCode.ERROR_CODE_OTHER
+            } as ResponseModel)
+            return;
+        }
+        logger.warn(`Token Auth Faild, Unauthorized : ${error.message}`)
+        res.status(HttpStatusCode.UNAUTHORIZED);
+        res.send({
+            success: false,
+            message: error.message,
+            code: error.message.match(/(\[[0-9]{3}\])(\w+)/) && error.message.match(/(\[[0-9]{3}\])(\w+)/).length === 3 ? error.message.match(/(\[[0-9]{3}\])(\w+)/)[1] : DefineCode.ERROR_CODE_OTHER
+        } as ResponseModel)
+    })    
+}
+
     

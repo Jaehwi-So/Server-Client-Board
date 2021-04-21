@@ -3,3 +3,9 @@ export interface JwtAuthModel{
     message: string,
     token?: any,
 }  
+
+export interface LoginAuthModel{
+    code: number,
+    message: string,
+    loginToken?: any,
+}  

@@ -11,7 +11,7 @@
           <ul class="list-unstyled">
             <li><a routerLink="/" routerLinkActive="active">Main</a></li>
             <li><a routerLink="/board" routerLinkActive="active">Board</a></li>
-            <li><a href="#" class="text-white">Coming soon</a></li>
+            <li><a routerLink="/account" routerLinkActive="active">Get Account!</a></li>
           </ul>
         </div>
       </div>
@@ -25,6 +25,9 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+    </div>
+    <div class="container">
+      <p *ngIf="isLogin" style="color:white">{{nick}}님 환영합니다</p>
     </div>
   </div>
 </header>

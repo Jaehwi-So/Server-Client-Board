@@ -25,6 +25,7 @@
     "angular-jwt": "^0.1.11",
     "bootstrap": "^5.0.0-beta1",
     "core-js": "^2.5.4",
+    "jwt-decode": "^3.1.2",
     "rxjs": "~6.3.3",
     "rxjs-compat": "^6.6.3",
     "tslib": "^1.9.0",

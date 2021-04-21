@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from 'src/app/auth/auth.guard';
 import { BoardDetailComponent } from './board-detail/board-detail.component';
 import { BoardInsertFormComponent } from './board-insert-form/board-insert-form.component';
 import { BoardListComponent } from './board-list/board-list.component';
@@ -7,12 +8,12 @@ import { BoardComponent } from './board.component';
 
 const routes: Routes = [
   {
-    path : 'board', component: BoardComponent,
+    path : 'board', component: BoardComponent, canActivate: [AuthGuard],
     children:[
-      {path : '', component: BoardListComponent},
-      {path : 'list', component: BoardListComponent},
-      {path : 'insert', component: BoardInsertFormComponent},
-      {path : ':id', component: BoardDetailComponent},
+      {path : '', component: BoardListComponent, canActivate: [AuthGuard]},
+      {path : 'list', component: BoardListComponent, canActivate: [AuthGuard]},
+      {path : 'insert', component: BoardInsertFormComponent, canActivate: [AuthGuard]},
+      {path : ':id', component: BoardDetailComponent, canActivate: [AuthGuard]},
     ]
 
   },  

@@ -13,7 +13,7 @@ import logger from "../config/winston";
 export class ResourceController extends Controller {
 
     @Post("single")
-    public insert (@Request() req: any) : Promise<ResponseModel> {
+    public insert_resource (@Request() req: any) : Promise<ResponseModel> {
         return new Promise<ResponseModel>(async (resolve, reject) => {
             const fileUploadResult = await handleFile(req);
             console.log(fileUploadResult.resource);

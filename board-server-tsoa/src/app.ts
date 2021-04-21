@@ -97,6 +97,7 @@ sequelize.sync({ force: false })
 
 //Allow Cors
 app.use(cors(/*{
+  
   allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token", "authorization", "Access-Control-Allow-Origin"],
   methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
   origin: ['*', 'http://localhost:4200', 'http://localhost:4201', 'http://localhost:8080'],

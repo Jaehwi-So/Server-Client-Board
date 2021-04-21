@@ -6,31 +6,6 @@
     "auditLog": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-tsoa\\log\\.582e2fd77406dffea7c550f877470212e7f34b72-audit.json",
     "files": [
         {
-            "date": 1614823116491,
-            "name": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-tsoa\\log\\app.log.2021-03-04",
-            "hash": "ff391f9f81bdac614f9e7410b6977200"
-        },
-        {
-            "date": 1615441927824,
-            "name": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-tsoa\\log\\app.log.2021-03-11",
-            "hash": "2803d89bf66bacb72a159c218cf18590"
-        },
-        {
-            "date": 1615530277540,
-            "name": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-tsoa\\log\\app.log.2021-03-12",
-            "hash": "659c7680a56c281239e642590eacf491"
-        },
-        {
-            "date": 1615766804889,
-            "name": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-tsoa\\log\\app.log.2021-03-15",
-            "hash": "a5af05663dc90f25ff9a375070bfd866"
-        },
-        {
-            "date": 1615856702189,
-            "name": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-tsoa\\log\\app.log.2021-03-16",
-            "hash": "2f996590c11568dbf9f24e6f3ddda6cd"
-        },
-        {
             "date": 1616998772697,
             "name": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-tsoa\\log\\app.log.2021-03-29",
             "hash": "45e182bcb02c42f62af9da46bcd784c2"
@@ -39,6 +14,21 @@
             "date": 1617062645701,
             "name": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-tsoa\\log\\app.log.2021-03-30",
             "hash": "19e3a4d8228048491f0bd5941959a977"
+        },
+        {
+            "date": 1617236091025,
+            "name": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-tsoa\\log\\app.log.2021-04-01",
+            "hash": "dab7682aa39498e348244a5045c90550"
+        },
+        {
+            "date": 1618877202515,
+            "name": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-tsoa\\log\\app.log.2021-04-20",
+            "hash": "35a06d29f9e57cc40ae51d49f9e7857e"
+        },
+        {
+            "date": 1618968139845,
+            "name": "C:\\sjh\\node_work\\angular_study_with_ts\\15_OpenAPI\\board-server-tsoa\\log\\app.log.2021-04-21",
+            "hash": "7a955afa7e41c2805c1d1c47e978f8e5"
         }
     ]
 }

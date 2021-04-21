@@ -11,7 +11,7 @@ import logger from "../config/winston";
 export class DomainController extends Controller {
 
     @Post()
-    public insert (@Request() req: any, @Body() form: DomainModel) : Promise<ResponseModel> {
+    public insert_domain (@Request() req: any, @Body() form: DomainModel) : Promise<ResponseModel> {
         return new Promise<ResponseModel>((resolve, reject) => {
             const { host } = form;
             insertDomain(host)
