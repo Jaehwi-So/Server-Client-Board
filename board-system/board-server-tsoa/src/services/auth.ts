@@ -5,6 +5,7 @@ import logger from "../config/winston";
 import DefineCode from "../enum/defineCode";
 import HttpStatusCode from "../enum/httpStatusCode";
 import ResponseModel from "../models/responseModel";
+import { generate_login_token } from "./token";
 
 /**
  * Is called before each request to a protected api-resource.
@@ -18,7 +19,7 @@ export function expressAuthentication(req: express.Request, securityName: string
     switch (securityName) {
         case 'jwt':
             return jwtAuth(req, res, scopes);
-        case 'jwtLogin':
+        case 'login':
             return jwtLoginAuth(req, res, scopes);
         default:
             return noneAuth(req, res);
@@ -81,22 +82,30 @@ export const noneAuth = (req: express.Request, res: express.Response) => {
 }
 
 export const jwtLoginAuth = (req: express.Request, res: express.Response, scopes?: string[], _token?: string) => {
-    return new Promise<any>((resolve, reject) => {
+    return new Promise<any>(async (resolve, reject) => {
         try{
             const token = (req.get('Authorization') || 'Bearer ').split('Bearer ')[1] || (_token as string);
-            const secret = `${process.env.JWT_SECRET}`;
-            const decoded = jwt.verify(token, secret);
-            
+            const secret = `${process.env.LOGIN_SECRET}`;
+            const decoded = jwt.verify(token, secret) as any;
             if(decoded){
+                
+                const expireTime = decoded.exp * 1000;
+                const todayTime = Date.now();
+                console.log(expireTime, todayTime);
+                if (expireTime - DefineCode.TokenRefreshTimeGap <= todayTime && todayTime < expireTime) {
+                    console.log('===== update token! ====');
+                    decoded.accessToken = await generate_login_token(decoded.email, decoded.nick);  //decoded 속성으로 새로운 토큰을 보낸다.
+                }
                 logger.info(`Token Auth Success : ${token}`)
-                resolve({});
+                
+                resolve(decoded);
             }
             else{
                 reject(new Error(`${DefineCode.ERROR_CODE_AUTH_FAILED}Empty decoded refresh token.`));
             }
         }
         catch(error){
-            console.log(error);
+            console.log('error!' , error);
             reject(error);
         }
     })

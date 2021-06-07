@@ -4,6 +4,7 @@ import { v4 as uuid } from 'uuid';
 import Board, { BoardFormModel, BoardModel } from "../models/board";
 import { PageModel } from "../models/page";
 import HttpStatusCode from "../enum/httpStatusCode";
+import { request } from "express";
 
 export const selectList = async (page : PageModel): Promise<ResponseModel>=> {
     return new Promise(async (resolve, reject) => {
@@ -21,7 +22,7 @@ export const selectList = async (page : PageModel): Promise<ResponseModel>=> {
                     success : true,
                     message : "결과가 존재하지 않습니다.",
                     data : null,
-                    code : HttpStatusCode.NO_CONTENT
+                    code : HttpStatusCode.NO_CONTENT,
                 } as ResponseModel);
             }
             resolve({
@@ -36,7 +37,7 @@ export const selectList = async (page : PageModel): Promise<ResponseModel>=> {
                         pageSize : page.pageSize,
                     } as PageModel
                 },
-                code : HttpStatusCode.OK
+                code : HttpStatusCode.OK,
             } as ResponseModel);       
         } catch(error){
             reject(error);       

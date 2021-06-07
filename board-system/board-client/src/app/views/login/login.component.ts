@@ -6,6 +6,7 @@ import { catchError } from 'rxjs/operators';
 import ResponseModel from 'src/app/models/ResponseModel';
 import { UserRequestModel } from 'src/app/models/UserModel';
 import { ApiService } from 'src/app/service/api.service';
+import { AuthService } from 'src/app/service/auth.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
   userReqModel : UserRequestModel;
 
 
-  constructor(private apiService : ApiService, private fb: FormBuilder, private router : Router) { 
+  constructor(private apiService : ApiService, private fb: FormBuilder, private router : Router, private authService : AuthService) { 
     this.insertForm = this.fb.group({   //유효성 체크.
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -46,6 +47,9 @@ export class LoginComponent implements OnInit {
       if(response.success == true){
         console.log('성공');
         alert("로그인에 성공했습니다.")
+        //login setting
+        const token = this.apiService.getLoginToken();
+        this.authService.loginSet(token);
         this.router.navigateByUrl('/');
       }
       else{

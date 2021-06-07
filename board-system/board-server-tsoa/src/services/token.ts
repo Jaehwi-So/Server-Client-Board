@@ -38,6 +38,18 @@ export const get_token = async (clientSecret : string): Promise<JwtAuthModel>=> 
     })
     
 }
+export const generate_login_token = async (email : string, nick : string) => {
+    let secret : jwt.Secret;
+    secret = process.env.LOGIN_SECRET!;
+    const token = jwt.sign({
+        email : email,
+        nick : nick
+        }, secret, {
+        expiresIn: process.env.LOGIN_EXPIRED_TIME || '30m', // 1분
+        issuer: 'board-service',
+    });
+    return token;
+}
 
 export const get_token_login = async (userForm : UserReqModel): Promise<JwtAuthModel>=> {
     return new Promise(async (resolve, reject) => {
@@ -57,15 +69,7 @@ export const get_token_login = async (userForm : UserReqModel): Promise<JwtAuthM
             else{
                 const result = await bcrypt.compare(userForm.password, user.password);
                 if(result){
-                    let secret : jwt.Secret;
-                    secret = process.env.JWT_SECRET!;
-                    const token = jwt.sign({
-                        email : user.email,
-                        nick : user.nick
-                        }, secret, {
-                        expiresIn: process.env.TOKEN_EXPIRED_TIME || '10m', // 1분
-                        issuer: 'board-service',
-                    });
+                    const token = await generate_login_token(user.email, user.nick);
                     resolve({
                         result: true,
                         code: HttpStatusCode.OK,

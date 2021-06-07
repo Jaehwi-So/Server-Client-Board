@@ -32,7 +32,7 @@ export class BoardListComponent implements OnInit{
   }
   
   getList(curPage : Number){
-    const boards$ = this.apiService.get_api_request(`${this.apiUrl}/board?page=${curPage}&pageSize=${this.pager.pageSize}&maxSize=${this.pager.maxSize}`);
+    const boards$ = this.apiService.get_api_request_signin(`${this.apiUrl}/board?page=${curPage}&pageSize=${this.pager.pageSize}&maxSize=${this.pager.maxSize}`);
     boards$.subscribe((res : ResponseModel) => {
       if(res.success = true){
         this.boards = res.data.list;

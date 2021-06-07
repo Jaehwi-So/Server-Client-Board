@@ -22,7 +22,7 @@ export class BoardDetailComponent implements OnInit {
     if(this.route.snapshot.queryParamMap.get('page')){
       this.page = Number(this.route.snapshot.queryParamMap.get('page'));
     }
-    const board$ = this.apiService.get_api_request(`${this.apiUrl}/board/${this.id}`);
+    const board$ = this.apiService.get_api_request_signin(`${this.apiUrl}/board/${this.id}`);
     board$.subscribe((res : ResponseModel) => {
       if(res.success == true){
         this.board = res.data;

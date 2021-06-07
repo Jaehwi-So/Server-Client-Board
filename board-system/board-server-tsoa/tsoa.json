@@ -19,6 +19,12 @@
             "scheme": "bearer",
             "in": "header",
             "name": "authorization jwt"
+          },
+          "login": {
+            "type": "http",
+            "scheme": "bearer",
+            "in": "header",
+            "name": "authorization login"
           }
       }
     },

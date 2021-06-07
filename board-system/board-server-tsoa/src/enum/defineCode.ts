@@ -5,5 +5,6 @@ const DefineCode = {
     RESOURCE_PATH: 'resources/',
     RESOURCE_CLIENT_PATH: '/img/',
     RESOURCE_MAX_SIZE: 5 * 1024 * 1024,
+    TokenRefreshTimeGap: 900000    //1800000
 }
 export default DefineCode;

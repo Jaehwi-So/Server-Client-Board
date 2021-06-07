@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserRequestModel } from '../models/UserModel';
 import ResponseModel from '../models/ResponseModel';
+import { catchError, map, takeUntil } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -119,10 +120,10 @@ export class ApiService {
     }
   }
 
+  /* Login Auth API Reqeust */
 
   //로그인 토큰 발급
   login_signin(user : UserRequestModel) {
-    console.log('발급', this.apiHost);
     return this.http.post<ResponseModel>(`${this.apiHost}/auth/login`, {
         'email': user.email,
         'password': user.password,
@@ -131,28 +132,32 @@ export class ApiService {
 
   //클라이언트 단에 저장된 토큰 GET
   getLoginToken(): string {
-    console.log("getToken()_login", localStorage.getItem(this.LOGIN_TOKEN));
     return localStorage.getItem(this.LOGIN_TOKEN);
   }
 
   //클라이언트 단에 토큰 SET
   setLoginToken(token: string) {
-    console.log('setToken()', token);
-    localStorage.setItem(this.LOGIN_TOKEN, token);
+    if(token){
+      console.log('setToken()', token);
+      localStorage.setItem(this.LOGIN_TOKEN, token);
+    }
   }
 
   //클라이언트 단의 토큰 DELETE
   removeLoginToken() {
-    console.log('removeToken()');
     localStorage.removeItem(this.LOGIN_TOKEN);
   }
 
   //클라이언트 단의 토큰 유효기간 체크
   isLoginTokenExpired(token: string) {
-    console.log("tokenExpired");
-    return this.jwtHelper.isTokenExpired(token);
+    const isExpire = this.jwtHelper.isTokenExpired(token);
+    if(isExpire){
+      this.removeLoginToken();
+    }
+    return isExpire;
   }
 
+  //로그인 요청
   public login_api (user : UserRequestModel) : Observable<ResponseModel>{
     try{
       return new Observable<ResponseModel>((observer: Observer<ResponseModel>) => {
@@ -178,7 +183,81 @@ export class ApiService {
     }
   }
 
+  //GET Reqeust with Login Auth
+  public get_api_request_signin (url : string) : Observable<ResponseModel>{
+    try{
+      if(this.getLoginToken() == undefined || this.getLoginToken() == null || this.isLoginTokenExpired(this.getLoginToken())){
+        return;
+      }
+      return this.http.get<ResponseModel>(url, {
+        headers: {authorization: `Bearer ${this.getLoginToken() || ''}`}
+      })
+      .pipe(
+        map((res: ResponseModel) => {
+          if(res.token){
+            console.log('RESET TOKEN')
+            this.setLoginToken(res.token);
+          }
+          if (!res.success) {
+            console.log("App error");
+          }
+          return res;
+        }),
+        catchError((err, caught: Observable<ResponseModel>): never => {
+          throw new Error(err);
+        }),
+      );
   
+    }
+    catch(error){
+      if(error.status === 419){
+        console.log("토큰 만료", error);
+        return error.response;
+      }
+      else{
+        console.log("서버 오류 or 유효하지 않은 사용자", error);
+        return error.response;
+      }
+    }
+  }
+
+  //POST Reqeust with Login Auth
+  public post_api_request_signin (url : string, data) : Observable<ResponseModel>{
+    try{
+      if(this.getLoginToken() == undefined || this.getLoginToken() == null || this.isLoginTokenExpired(this.getLoginToken())){
+        return;
+      }
+      return this.http.post<ResponseModel>(url, data, { //3. 서버에 HTTP 요청
+        headers: {Authorization: `Bearer ${this.getToken() || ''}`}
+      })
+      .pipe(
+        map((res: ResponseModel) => {
+          if(res.token){
+            console.log('RESET TOKEN')
+            this.setLoginToken(res.token);
+          }
+          if (!res.success) {
+            console.log("App error");
+          }
+          return res;
+        }),
+        catchError((err, caught: Observable<ResponseModel>): never => {
+          throw new Error(err);
+        }),
+      );
+  
+    }
+    catch(error){
+      if(error.status === 419){
+        console.log("토큰 만료", error);
+        return error.response;
+      }
+      else{
+        console.log("서버 오류 or 유효하지 않은 사용자", error);
+        return error.response;
+      }
+    }
+  }
 
   /*
   public async get_api_promise<T> (url : string) : Promise<T>{

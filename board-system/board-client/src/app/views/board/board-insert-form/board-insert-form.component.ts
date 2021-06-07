@@ -54,7 +54,7 @@ export class BoardInsertFormComponent implements OnInit {
       const file = files[0];
       this.formData = new FormData();
       this.formData.append('file', file);      
-      this.apiService.post_api_request(`${this.apiUrl}/resource/single`, this.formData)
+      this.apiService.post_api_request_signin(`${this.apiUrl}/resource/single`, this.formData)
       .subscribe((res : ResponseModel) => {
         console.log('요청은 보냄');
         if(res.success == true){
@@ -86,7 +86,7 @@ export class BoardInsertFormComponent implements OnInit {
   onSubmit(){
     this.updateRequestForm()
     console.log(this.boardRequestModel);
-    this.apiService.post_api_request(`${this.apiUrl}/board`, this.boardRequestModel)
+    this.apiService.post_api_request_signin(`${this.apiUrl}/board`, this.boardRequestModel)
     .subscribe((res : ResponseModel) => {
       if(res.success == true){
         console.log('성공');

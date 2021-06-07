@@ -8,12 +8,12 @@ import { BoardComponent } from './board.component';
 
 const routes: Routes = [
   {
-    path : 'board', component: BoardComponent, /* canActivate: [AuthGuard] , */
+    path : 'board', component: BoardComponent,  canActivate: [AuthGuard] , 
     children:[
-      {path : '', component: BoardListComponent, /* canActivate: [AuthGuard] , */},
-      {path : 'list', component: BoardListComponent, /* canActivate: [AuthGuard] , */},
-      {path : 'insert', component: BoardInsertFormComponent, /* canActivate: [AuthGuard] , */},
-      {path : ':id', component: BoardDetailComponent, /* canActivate: [AuthGuard] , */},
+      {path : '', component: BoardListComponent,  canActivate: [AuthGuard] , },
+      {path : 'list', component: BoardListComponent,  canActivate: [AuthGuard] , },
+      {path : 'insert', component: BoardInsertFormComponent,  canActivate: [AuthGuard] , },
+      {path : ':id', component: BoardDetailComponent,  canActivate: [AuthGuard] , },
     ]
 
   },  

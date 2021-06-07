@@ -25,6 +25,7 @@ const models: TsoaRoute.Models = {
             "message": { "dataType": "string", "required": true },
             "data": { "dataType": "any", "required": true },
             "code": { "dataType": "double", "required": true },
+            "token": { "dataType": "string" },
         },
         "additionalProperties": true,
     },
@@ -125,7 +126,7 @@ export function RegisterRoutes(app: express.Express) {
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.get('/api/v1/board',
-        authenticateMiddleware([{ "jwt": [] }]),
+        authenticateMiddleware([{ "login": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
                 req: { "in": "request", "name": "req", "required": true, "dataType": "object" },
@@ -151,7 +152,7 @@ export function RegisterRoutes(app: express.Express) {
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.post('/api/v1/board',
-        authenticateMiddleware([{ "jwt": [] }]),
+        authenticateMiddleware([{ "login": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
                 req: { "in": "request", "name": "req", "required": true, "dataType": "object" },
@@ -200,7 +201,7 @@ export function RegisterRoutes(app: express.Express) {
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.get('/api/v1/board/:id',
-        authenticateMiddleware([{ "jwt": [] }]),
+        authenticateMiddleware([{ "login": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
                 req: { "in": "request", "name": "req", "required": true, "dataType": "object" },
@@ -224,7 +225,7 @@ export function RegisterRoutes(app: express.Express) {
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.put('/api/v1/board/:id',
-        authenticateMiddleware([{ "jwt": [] }]),
+        authenticateMiddleware([{ "login": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
                 req: { "in": "request", "name": "req", "required": true, "dataType": "object" },
@@ -249,7 +250,7 @@ export function RegisterRoutes(app: express.Express) {
         });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.delete('/api/v1/board/:id',
-        authenticateMiddleware([{ "jwt": [] }]),
+        authenticateMiddleware([{ "login": [] }]),
         function(request: any, response: any, next: any) {
             const args = {
                 req: { "in": "request", "name": "req", "required": true, "dataType": "object" },

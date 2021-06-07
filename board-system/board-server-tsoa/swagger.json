@@ -21,6 +21,10 @@
 					"code": {
 						"type": "number",
 						"format": "double"
+					},
+					"token": {
+						"type": "string",
+						"nullable": true
 					}
 				},
 				"required": [
@@ -115,6 +119,12 @@
 				"scheme": "bearer",
 				"in": "header",
 				"name": "authorization jwt"
+			},
+			"login": {
+				"type": "http",
+				"scheme": "bearer",
+				"in": "header",
+				"name": "authorization login"
 			}
 		}
 	},
@@ -201,7 +211,7 @@
 				},
 				"security": [
 					{
-						"jwt": []
+						"login": []
 					}
 				],
 				"parameters": [
@@ -250,7 +260,7 @@
 				},
 				"security": [
 					{
-						"jwt": []
+						"login": []
 					}
 				],
 				"parameters": [],
@@ -355,7 +365,7 @@
 				},
 				"security": [
 					{
-						"jwt": []
+						"login": []
 					}
 				],
 				"parameters": [
@@ -386,7 +396,7 @@
 				},
 				"security": [
 					{
-						"jwt": []
+						"login": []
 					}
 				],
 				"parameters": [
@@ -426,7 +436,7 @@
 				},
 				"security": [
 					{
-						"jwt": []
+						"login": []
 					}
 				],
 				"parameters": [

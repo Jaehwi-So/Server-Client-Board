@@ -11,13 +11,14 @@ import logger from "../config/winston";
 @Route("board")
 export class BoardController extends Controller {
 
-    @Security('jwt', [])
+    @Security('login', [])
     @Get()
-    public select_list(@Request() req: any, @Query() page: number, @Query() pageSize: number, @Query() maxSize: number) : Promise<ResponseModel> {     
+    public select_list(@Request() req: any, @Query() page: number, @Query() pageSize: number, @Query() maxSize: number) : Promise<ResponseModel> {  
         return new Promise<ResponseModel>((resolve, reject) => {
             selectList({page : page, pageSize : pageSize, maxSize : maxSize} as PageModel)
             .then(result => {
                 logger.info(`[GET] [board] select list`);
+                result.token = req.user.accessToken
                 resolve(result as ResponseModel);
             })
             .catch(error => {
@@ -30,18 +31,20 @@ export class BoardController extends Controller {
             return {
                 success: false,
                 message : error.message,
-                code: error.message.match(/(\[[0-9]{3}\])(\w+)/) && error.message.match(/(\[[0-9]{3}\])(\w+)/).length === 3 ? error.message.match(/(\[[0-9]{3}\])(\w+)/)[1] : DefineCode.ERROR_CODE_OTHER
+                code: error.message.match(/(\[[0-9]{3}\])(\w+)/) && error.message.match(/(\[[0-9]{3}\])(\w+)/).length === 3 ? error.message.match(/(\[[0-9]{3}\])(\w+)/)[1] : DefineCode.ERROR_CODE_OTHER,
+                token: req.user.accessToken
             } as ResponseModel
         })
     }
 
-    @Security('jwt', [])
+    @Security('login', [])
     @Post()
     public insert_board(@Request() req: any, @Body() form: BoardFormModel) : Promise<ResponseModel> {
         return new Promise<ResponseModel>(async (resolve, reject) => {
             insert(form)
             .then(result => {
                 logger.info(`[POST] [board] insert board`);
+                result.token = req.user.accessToken
                 resolve(result as ResponseModel);
             })
             .catch(error => {
@@ -54,7 +57,8 @@ export class BoardController extends Controller {
             return {
                 success: false,
                 message : error.message,
-                code: error.message.match(/(\[[0-9]{3}\])(\w+)/) && error.message.match(/(\[[0-9]{3}\])(\w+)/).length === 3 ? error.message.match(/(\[[0-9]{3}\])(\w+)/)[1] : DefineCode.ERROR_CODE_OTHER
+                code: error.message.match(/(\[[0-9]{3}\])(\w+)/) && error.message.match(/(\[[0-9]{3}\])(\w+)/).length === 3 ? error.message.match(/(\[[0-9]{3}\])(\w+)/)[1] : DefineCode.ERROR_CODE_OTHER,
+                token: req.user.accessToken
             } as ResponseModel
         })
     }
@@ -82,13 +86,14 @@ export class BoardController extends Controller {
         })
     }
 
-    @Security('jwt', [])
+    @Security('login', [])
     @Get("{id}")
     public select_one(@Request() req: any, @Path() id: number,) : Promise<ResponseModel> {
         return new Promise<ResponseModel>((resolve, reject) => {
             selectOne(id)
             .then(result => {
                 logger.info(`[GET] [board] [${id}] select one`);
+                result.token = req.user.accessToken
                 resolve(result as ResponseModel);
             })
             .catch(error => {
@@ -101,18 +106,20 @@ export class BoardController extends Controller {
             return {
                 success: false,
                 message : error.message,
-                code: error.message.match(/(\[[0-9]{3}\])(\w+)/) && error.message.match(/(\[[0-9]{3}\])(\w+)/).length === 3 ? error.message.match(/(\[[0-9]{3}\])(\w+)/)[1] : DefineCode.ERROR_CODE_OTHER
+                code: error.message.match(/(\[[0-9]{3}\])(\w+)/) && error.message.match(/(\[[0-9]{3}\])(\w+)/).length === 3 ? error.message.match(/(\[[0-9]{3}\])(\w+)/)[1] : DefineCode.ERROR_CODE_OTHER,
+                token: req.user.accessToken
             } as ResponseModel
         })
     }
 
-    @Security('jwt', [])
+    @Security('login', [])
     @Put("{id}")
     public update_board(@Request() req: any, @Body() form: BoardFormModel, @Path() id: number) : Promise<ResponseModel> {
         return new Promise<ResponseModel>(async (resolve, reject) => {
             update(form, id)
             .then(result => {
                 logger.info(`[PUT] [board] update board`);
+                result.token = req.user.accessToken
                 resolve(result as ResponseModel);
             })
             .catch(error => {
@@ -125,18 +132,20 @@ export class BoardController extends Controller {
             return {
                 success: false,
                 message : error.message,
-                code: error.message.match(/(\[[0-9]{3}\])(\w+)/) && error.message.match(/(\[[0-9]{3}\])(\w+)/).length === 3 ? error.message.match(/(\[[0-9]{3}\])(\w+)/)[1] : DefineCode.ERROR_CODE_OTHER
+                code: error.message.match(/(\[[0-9]{3}\])(\w+)/) && error.message.match(/(\[[0-9]{3}\])(\w+)/).length === 3 ? error.message.match(/(\[[0-9]{3}\])(\w+)/)[1] : DefineCode.ERROR_CODE_OTHER,
+                token: req.user.accessToken
             } as ResponseModel
         })
     }
     
-    @Security('jwt', [])
+    @Security('login', [])
     @Delete("{id}")
     public delete_board(@Request() req: any, @Path() id: number) : Promise<ResponseModel> {
         return new Promise<ResponseModel>(async (resolve, reject) => {
             remove(id)
             .then(result => {
                 logger.info(`[DELETE] [board] delete board`);
+                result.token = req.user.accessToken
                 resolve(result as ResponseModel);
             })
             .catch(error => {
@@ -149,7 +158,8 @@ export class BoardController extends Controller {
             return {
                 success: false,
                 message : error.message,
-                code: error.message.match(/(\[[0-9]{3}\])(\w+)/) && error.message.match(/(\[[0-9]{3}\])(\w+)/).length === 3 ? error.message.match(/(\[[0-9]{3}\])(\w+)/)[1] : DefineCode.ERROR_CODE_OTHER
+                code: error.message.match(/(\[[0-9]{3}\])(\w+)/) && error.message.match(/(\[[0-9]{3}\])(\w+)/).length === 3 ? error.message.match(/(\[[0-9]{3}\])(\w+)/)[1] : DefineCode.ERROR_CODE_OTHER,
+                token: req.user.accessToken
             } as ResponseModel
         })
     }

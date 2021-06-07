@@ -3,5 +3,6 @@ interface ResponseModel {
     message: string;
     data: any;
     code: string;
+    token?: string;
 }
 export default ResponseModel
