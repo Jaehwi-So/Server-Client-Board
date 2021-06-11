@@ -52,7 +52,6 @@ const config: IConfigGroup = {
       "dateStrings" : true, 
       "typeCast" : true 
     },
-    "timezone": "+09:00",
   }
 };
 

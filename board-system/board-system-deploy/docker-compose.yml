@@ -20,6 +20,23 @@ services:
       - TZ=Asia/Seoul
     volumes:
       - ./mariadb:/var/lib/mysql
+  phpmyadmin-db:
+    restart: always
+    depends_on:
+      - database
+    networks:
+      - app-tier
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - "8081:80"
+    links:
+      - "database:db"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - PMA_HOST=database
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - TZ=Asia/Seoul
   app:
     networks:
       - app-tier
@@ -30,7 +47,7 @@ services:
         max-size: "50m"
         max-file: "10"    
     build:
-      context: /home/mediatest/Desktop/app/board-server-webpack-dist
+      context: /home/media/Desktop/app/board-server-webpack-dist
       dockerfile: ./Dockerfile.dev
     restart: always
     ports:

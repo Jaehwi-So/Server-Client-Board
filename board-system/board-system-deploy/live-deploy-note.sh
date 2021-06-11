@@ -1,7 +1,7 @@
 zip -r ./latest.zip ./docker-compose.yml ../board-server-webpack-dist 
 # 빌드 결과물을 압축하여
 
-pscp -P 22 ./latest.zip mediatest@172.30.1.32:/home/mediatest/Desktop/remote/latest.zip 
+pscp -P 22 ./latest.zip media@172.30.1.56:/home/media/Desktop/remote/latest.zip 
 # 테스트 서버로 보냄
 
 rm ./latest.zip
@@ -16,7 +16,7 @@ rm ./latest.zip
 
 #wget http://192.168.0.2/Temp/pb/latest.zip
 
-unzip -o -q /home/media/remote-dir/latest.zip -d /home/media/app    # 압축을 해제함
+unzip -o -q /home/media/Desktop/remote/latest.zip -d /home/media/Desktop/app    # 압축을 해제함
 rm /home/media/remote-dir/latest.zip
 #docker build -t node-app /home/media/app/pubbling-docker-node
 

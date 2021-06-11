@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "local-deploy": "ng build && node toss.js",
     "prod-deploy": "ng build --prod && node toss.js",
     "test": "ng test",
     "lint": "ng lint",
