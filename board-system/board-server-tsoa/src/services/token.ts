@@ -5,6 +5,7 @@ import { JwtAuthModel, LoginAuthModel } from "../models/jwtAuth";
 import User, { UserReqModel } from "../models/user";
 import bcrypt from 'bcrypt';
 
+/* API 토큰 발급 */
 export const get_token = async (clientSecret : string): Promise<JwtAuthModel>=> {
     return new Promise(async (resolve, reject) => {
         try{
@@ -38,10 +39,13 @@ export const get_token = async (clientSecret : string): Promise<JwtAuthModel>=> 
     })
     
 }
-export const generate_login_token = async (email : string, nick : string) => {
+
+/* 로그인 토큰 생성 */
+export const generate_login_token = async (id : number, email : string, nick : string) => {
     let secret : jwt.Secret;
     secret = process.env.LOGIN_SECRET!;
     const token = jwt.sign({
+        id : id,
         email : email,
         nick : nick
         }, secret, {
@@ -51,6 +55,7 @@ export const generate_login_token = async (email : string, nick : string) => {
     return token;
 }
 
+/* 로그인 토큰 발급 */
 export const get_token_login = async (userForm : UserReqModel): Promise<JwtAuthModel>=> {
     return new Promise(async (resolve, reject) => {
         try{
@@ -69,7 +74,7 @@ export const get_token_login = async (userForm : UserReqModel): Promise<JwtAuthM
             else{
                 const result = await bcrypt.compare(userForm.password, user.password);
                 if(result){
-                    const token = await generate_login_token(user.email, user.nick);
+                    const token = await generate_login_token(user.id, user.email, user.nick);
                     resolve({
                         result: true,
                         code: HttpStatusCode.OK,

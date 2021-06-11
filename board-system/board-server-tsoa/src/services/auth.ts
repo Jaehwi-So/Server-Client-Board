@@ -94,7 +94,7 @@ export const jwtLoginAuth = (req: express.Request, res: express.Response, scopes
                 console.log(expireTime, todayTime);
                 if (expireTime - DefineCode.TokenRefreshTimeGap <= todayTime && todayTime < expireTime) {
                     console.log('===== update token! ====');
-                    decoded.accessToken = await generate_login_token(decoded.email, decoded.nick);  //decoded 속성으로 새로운 토큰을 보낸다.
+                    decoded.accessToken = await generate_login_token(decoded.id, decoded.email, decoded.nick);  //decoded 속성으로 새로운 토큰을 보낸다.
                 }
                 logger.info(`Token Auth Success : ${token}`)
                 
