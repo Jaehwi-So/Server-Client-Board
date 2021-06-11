@@ -54,19 +54,21 @@
 
 # 서버
 - TSOA (TypeScript OpenAPI) 
-    * REST Open API 서버를 만들기 위해 TSOA 오픈소스 사용.
+    * REST API 서버를 만들기 위해 TSOA 오픈소스 사용.
 - Node.js, Express
     * Node.js와 Express 기반의 프로젝트
 - Typescript
     * Typescript를 이용하여 에러를 줄여보자
 - Swagger 
-    * Tsoa를 이용하여 Swagger 장착, Open API 문서 자동화
+    * Tsoa를 이용하여 Swagger 장착, API 문서 자동화
 - 인증
-    * JWT 토큰을 통한 인증 후 Open API 이용 가능
-    * (세션 기반의 인증 방식 추가 예정)
+    * API Secret Key을 통한 토큰 인증 후 API 이용 기능
+    * JWT 토큰 기반의 로그인 인증 기능
 - 데이터베이스
     * MariaDB
     * ORM으로 Sequelize 사용
+- phpMyAdmin
+    * 데이터베이스 편집 UI 제공
 - 멀티 프로세싱
     * 클러스터링 : 싱글 스레드의 한계점 보완을 위해 pm2를 이용하여 멀티 프로세싱 및 서버 무중단 운영
     * (Redis : 클러스터링에 따른 세션 공유와 빠른 리소스 로딩 역할을 위해서 Redis DB 추가 예정)
@@ -77,7 +79,7 @@
 - Webpack
     * Webpack을 통한 모듈 번들링
 - Docker
-    * (배포를 위한 이미지 Dockerlizing 예정)
+    * 배포를 위한 이미지 Dockerlizing
 - Monitoring
     * (Grafana : 서버 모니터링을 위해 추가 예정)
     * (Prometheus : 서버 모니터링을 위해 추가 예정)
