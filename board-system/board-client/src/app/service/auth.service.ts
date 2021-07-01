@@ -8,6 +8,7 @@ export class AuthService {
 
   isLogedIn : boolean;
   nick : string;
+  id: number;
 
   constructor() { 
     this.isLogedIn = false;
@@ -27,6 +28,7 @@ export class AuthService {
     this.isLogedIn = true;
     const decodedToken = this.getDecodedAccessToken(token);
     this.nick = decodedToken.nick;
+    this.id = decodedToken.id;
   }
 
   logoutSet(){

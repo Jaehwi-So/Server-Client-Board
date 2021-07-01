@@ -48,7 +48,7 @@
   });
     
   export const associate = (db: dbType) => {
-
+    db.User.hasMany(db.Chat, { foreignKey: 'uid', sourceKey: 'id' });
   };
     
   export default User;

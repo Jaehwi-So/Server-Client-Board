@@ -18,7 +18,7 @@ export class BoardController extends Controller {
             selectList({page : page, pageSize : pageSize, maxSize : maxSize} as PageModel)
             .then(result => {
                 logger.info(`[GET] [board] select list`);
-                result.token = req.user.accessToken
+                result.token = req.user.accessToken || null
                 resolve(result as ResponseModel);
             })
             .catch(error => {
@@ -32,7 +32,7 @@ export class BoardController extends Controller {
                 success: false,
                 message : error.message,
                 code: error.message.match(/(\[[0-9]{3}\])(\w+)/) && error.message.match(/(\[[0-9]{3}\])(\w+)/).length === 3 ? error.message.match(/(\[[0-9]{3}\])(\w+)/)[1] : DefineCode.ERROR_CODE_OTHER,
-                token: req.user.accessToken
+                token: req.user.accessToken || null
             } as ResponseModel
         })
     }
@@ -44,7 +44,7 @@ export class BoardController extends Controller {
             insert(form)
             .then(result => {
                 logger.info(`[POST] [board] insert board`);
-                result.token = req.user.accessToken
+                result.token = req.user.accessToken || null
                 resolve(result as ResponseModel);
             })
             .catch(error => {
@@ -58,7 +58,7 @@ export class BoardController extends Controller {
                 success: false,
                 message : error.message,
                 code: error.message.match(/(\[[0-9]{3}\])(\w+)/) && error.message.match(/(\[[0-9]{3}\])(\w+)/).length === 3 ? error.message.match(/(\[[0-9]{3}\])(\w+)/)[1] : DefineCode.ERROR_CODE_OTHER,
-                token: req.user.accessToken
+                token: req.user.accessToken || null
             } as ResponseModel
         })
     }
@@ -93,7 +93,7 @@ export class BoardController extends Controller {
             selectOne(id)
             .then(result => {
                 logger.info(`[GET] [board] [${id}] select one`);
-                result.token = req.user.accessToken
+                result.token = req.user.accessToken || null
                 resolve(result as ResponseModel);
             })
             .catch(error => {
@@ -107,7 +107,7 @@ export class BoardController extends Controller {
                 success: false,
                 message : error.message,
                 code: error.message.match(/(\[[0-9]{3}\])(\w+)/) && error.message.match(/(\[[0-9]{3}\])(\w+)/).length === 3 ? error.message.match(/(\[[0-9]{3}\])(\w+)/)[1] : DefineCode.ERROR_CODE_OTHER,
-                token: req.user.accessToken
+                token: req.user.accessToken || null
             } as ResponseModel
         })
     }
@@ -119,7 +119,7 @@ export class BoardController extends Controller {
             update(form, id)
             .then(result => {
                 logger.info(`[PUT] [board] update board`);
-                result.token = req.user.accessToken
+                result.token = req.user.accessToken || null
                 resolve(result as ResponseModel);
             })
             .catch(error => {
@@ -133,7 +133,7 @@ export class BoardController extends Controller {
                 success: false,
                 message : error.message,
                 code: error.message.match(/(\[[0-9]{3}\])(\w+)/) && error.message.match(/(\[[0-9]{3}\])(\w+)/).length === 3 ? error.message.match(/(\[[0-9]{3}\])(\w+)/)[1] : DefineCode.ERROR_CODE_OTHER,
-                token: req.user.accessToken
+                token: req.user.accessToken || null
             } as ResponseModel
         })
     }
@@ -145,7 +145,7 @@ export class BoardController extends Controller {
             remove(id)
             .then(result => {
                 logger.info(`[DELETE] [board] delete board`);
-                result.token = req.user.accessToken
+                result.token = req.user.accessToken || null
                 resolve(result as ResponseModel);
             })
             .catch(error => {
@@ -159,7 +159,7 @@ export class BoardController extends Controller {
                 success: false,
                 message : error.message,
                 code: error.message.match(/(\[[0-9]{3}\])(\w+)/) && error.message.match(/(\[[0-9]{3}\])(\w+)/).length === 3 ? error.message.match(/(\[[0-9]{3}\])(\w+)/)[1] : DefineCode.ERROR_CODE_OTHER,
-                token: req.user.accessToken
+                token: req.user.accessToken || null
             } as ResponseModel
         })
     }

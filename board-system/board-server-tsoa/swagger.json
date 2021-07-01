@@ -96,6 +96,28 @@
 				"type": "object",
 				"additionalProperties": true
 			},
+			"ChatFormModel": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"uid": {
+						"type": "number",
+						"format": "double"
+					},
+					"content": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"uid",
+					"content"
+				],
+				"type": "object",
+				"additionalProperties": true
+			},
 			"DomainModel": {
 				"properties": {
 					"host": {
@@ -542,6 +564,123 @@
 						}
 					}
 				]
+			}
+		},
+		"/chat": {
+			"get": {
+				"operationId": "Select_chatList",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseModel"
+								}
+							}
+						},
+						"description": "Ok"
+					}
+				},
+				"security": [
+					{
+						"login": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "start",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "end",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/chat/{id}": {
+			"get": {
+				"operationId": "Select_chatSingle",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseModel"
+								}
+							}
+						},
+						"description": "Ok"
+					}
+				},
+				"security": [
+					{
+						"login": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/chat/{roomId}": {
+			"post": {
+				"operationId": "Insert_chat",
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseModel"
+								}
+							}
+						},
+						"description": "Ok"
+					}
+				},
+				"security": [
+					{
+						"login": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "roomId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ChatFormModel"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/domain": {

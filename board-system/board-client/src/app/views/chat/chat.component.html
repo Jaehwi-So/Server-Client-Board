@@ -1,0 +1,37 @@
+<section class="py-5 text-center container">
+  <div class="row py-lg-5">
+    <div class="col-lg-6 col-md-8 mx-auto">
+      <h1 class="fw-light">CHAT</h1>
+      <p class="lead text-muted">Chat here!</p>
+    </div>
+  </div>
+</section>
+<div class="col-md-12 col-lg-12" class="chat-box">
+  <div *ngFor="let chat of chats">
+    <div class="row">
+      <div class="col-md-1"></div>  
+      <div class="col-md-5" *ngIf="chat.uid == authService.id"></div>      
+      <div class="col-md-5">
+        <div class="card shadow-sm" style="margin:5px 0px">
+          <div class="card-body">
+            <p class="card-text"><strong>{{chat.User.nick}}</strong> {{chat.createdAt}}</p>
+            <p class="card-text">{{chat.content}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-1"></div>  
+    </div>
+    
+  </div>
+</div>
+
+<form class="needs-validation" [formGroup]="insertForm" (ngSubmit)="onSubmit()">
+  <div class="row g-3">
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="content" placeholder="채팅 입력" formControlName="content" style="font-size:20px;" required >
+    </div>
+    <div class="col-sm-3">
+      <button class="w-100 btn btn-primary btn-lg" type="submit" [disabled]="!insertForm.valid">입력</button>
+    </div>
+  </div>
+</form>

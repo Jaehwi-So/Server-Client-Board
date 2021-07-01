@@ -19,13 +19,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
     BoardInsertFormComponent,
   ],
   imports: [
-    BrowserModule,
     BoardRoutingModule,
+    BrowserModule, 
     HttpClientModule,
     CommonModule, //루트 모듈이 아니므로 CommonModule을 import해준다.
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    
   ],
   exports: [
     BoardComponent,

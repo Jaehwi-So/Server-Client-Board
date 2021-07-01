@@ -7,6 +7,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserRequestModel } from '../models/UserModel';
 import ResponseModel from '../models/ResponseModel';
 import { catchError, map, takeUntil } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class ApiService {
   TOKEN_NAME = 'jwtauthToken';
   LOGIN_TOKEN = 'loginAuthToken'
 
-  constructor(private http : HttpClient, private jwtHelper: JwtHelperService) {
+  constructor(private router: Router, private http : HttpClient, private jwtHelper: JwtHelperService) {
     this.apiHost = environment.apiHost;
     this.http = http;
     console.log(this.apiHost);
@@ -187,6 +188,7 @@ export class ApiService {
   public get_api_request_signin (url : string) : Observable<ResponseModel>{
     try{
       if(this.getLoginToken() == undefined || this.getLoginToken() == null || this.isLoginTokenExpired(this.getLoginToken())){
+        this.router.navigate(['login']);
         return;
       }
       return this.http.get<ResponseModel>(url, {
@@ -221,14 +223,13 @@ export class ApiService {
     }
   }
 
-  //POST Reqeust with Login Auth
-  public post_api_request_signin (url : string, data) : Observable<ResponseModel>{
+  public post_api_request_signin (url : string,  data) : Observable<ResponseModel>{
     try{
       if(this.getLoginToken() == undefined || this.getLoginToken() == null || this.isLoginTokenExpired(this.getLoginToken())){
         return;
       }
-      return this.http.post<ResponseModel>(url, data, { //3. 서버에 HTTP 요청
-        headers: {Authorization: `Bearer ${this.getToken() || ''}`}
+      return this.http.post<ResponseModel>(url, data,{
+        headers: {authorization: `Bearer ${this.getLoginToken() || ''}`}
       })
       .pipe(
         map((res: ResponseModel) => {
@@ -258,32 +259,5 @@ export class ApiService {
       }
     }
   }
-
-  /*
-  public async get_api_promise<T> (url : string) : Promise<T>{
-    try{
-      //클라이언트 단에 토큰이 없거나 유효기간 만료시 재발급
-      if(this.getToken() == undefined || this.getToken() == null || this.isTokenExpired(this.getToken())){
-          this.removeToken();
-          const result_token = await this.token_signin().toPromise();
-          await this.setToken(result_token.token);
-      }
-      //토큰을 헤더에 넣어 요청
-      return this.http.get<T>(url, {
-        headers: {authorization: this.getToken()}
-      }).toPromise();    
-    }
-    catch(error){
-      //토큰 만료 에러시 재요청
-      if(error.status === 419){
-        console.log("토큰 만료", error);
-        return this.get_api_promise<T>(url);
-      }
-      else{
-        console.log("서버 오류", error);
-        return error.response;
-      }
-    }
-  }
-  */
+  
 }

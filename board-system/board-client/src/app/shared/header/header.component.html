@@ -12,6 +12,7 @@
             <li><a routerLink="/" routerLinkActive="active">Main</a></li>
             <li><a routerLink="/board" routerLinkActive="active">Board</a></li>
             <li><a routerLink="/account" routerLinkActive="active">Get Account!</a></li>
+            <li><a routerLink="/chat" routerLinkActive="active">Chatroom</a></li>
           </ul>
         </div>
       </div>
@@ -19,6 +20,10 @@
   </div>
   <div class="navbar navbar-dark bg-dark shadow-sm">
     <div class="container">
+      <div class="col-md-2" style="margin : 15px" *ngIf="authService.isLogedIn">
+        <span style="color:white">{{authService.nick}}님 환영합니다  </span>
+        <button class="btn btn-primary" (click)="logOut()">로그아웃</button>
+      </div>
       <a href="#" class="navbar-brand d-flex align-items-center">
         <strong>Tiny Web</strong>
       </a>
@@ -27,12 +32,4 @@
       </button>
     </div>
   </div>
-<div class="row bg-dark" *ngIf="authService.isLogedIn">
-  <div class="col-md-5" style="margin : 15px">
-    <span style="color:white">{{authService.nick}}님 환영합니다  </span>
-    <button class="btn btn-primary" (click)="logOut()">로그아웃</button>
-  </div>
-  <div class="col-md-6">
-  </div>
-</div>
 </header>

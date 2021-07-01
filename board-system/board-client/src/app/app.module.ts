@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ApiService } from './service/api.service';
 import { JwtModule } from '@auth0/angular-jwt';
-import { BoardModule } from './views/board/board.module';
 import { SharedModule } from './shared/shared.module';
 import { MainComponent } from './views/main/main.component';
 import { AccountComponent } from './views/account/account.component';
@@ -14,6 +13,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './views/login/login.component';
 import { AuthService } from './service/auth.service';
 import { PageService } from './service/page.service';
+import { ChatComponent } from './views/chat/chat.component';
+import { BoardModule } from './views/board/board.module';
+import { SocketService } from './service/socket.service';
+import { ChatService } from './service/chat.service';
 
 export function jwtTokenGetter(){
   return localStorage.getItem('token');
@@ -24,6 +27,7 @@ export function jwtTokenGetter(){
     MainComponent,
     AccountComponent,
     LoginComponent,
+    ChatComponent,
   ],
   imports: [  //의존 관계의 앵귤러 라이브러리 모듈, 기능 모듈(하위 모듈), 라우팅 모듈, 서브 파티 모듈 등을 선언한다.
     BrowserModule,
@@ -44,7 +48,9 @@ export function jwtTokenGetter(){
   providers: [  //providers : 서비스(Injectable object)의 리스트 선언. 루트 모듈에 선언된 서비스는 애플리케이션 전역에서 사용 가능하다.
     ApiService,
     AuthService,
-    PageService
+    PageService,
+    SocketService,
+    ChatService
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA  //앵귤러 전용 태그 사용을 위한 스키마

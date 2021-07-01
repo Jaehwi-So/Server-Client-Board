@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ApiService } from './service/api.service';
+import { AuthService } from './service/auth.service';
 import { PageService } from './service/page.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class AppComponent implements OnInit{
   title = 'board-client';
   token: string;
 
-  constructor(private apiService : ApiService, private pageService: PageService){
+  constructor(private apiService : ApiService, private pageService: PageService, private authService : AuthService){
     
   }
 
@@ -20,12 +21,6 @@ export class AppComponent implements OnInit{
 
   }
 
-  onTokenChangeListener() {
-    const token = this.apiService.getLoginToken();
-    if (!token && this.apiService.isLoginTokenExpired(token)) {
-      console.log('force move to login.');
-      this.pageService.moveTo('login');
-    } 
-  }
+  
 }
  
