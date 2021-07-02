@@ -10,11 +10,11 @@ export class ChatService {
 
   // Our constructor calls our wsService connect method
   constructor(private socketService : SocketService) {
-    console.log('chat construct()');
+    //console.log('chat construct()');
     this.messages = <Subject<any>>socketService
       .connect()
       .map((response: any): any => {
-        console.log('chat return()');
+        //console.log('chat return()');
         return response;
       })
    }
@@ -22,7 +22,7 @@ export class ChatService {
   // Our simplified interface for sending
   // messages back to our socket.io server
   sendMsg(msg) {
-    console.log('chat send()');
+    //console.log('chat send()');
     this.messages.next(msg);
   }
 }

@@ -1,5 +1,7 @@
 import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
 import Chat from "./models/chat";
+import redis from 'socket.io-redis'
+import winston from './config/winston';
 const SocketIO = require('socket.io');
 export const socket = (server, app) => {  
   const io = SocketIO(server, { 
@@ -11,17 +13,26 @@ export const socket = (server, app) => {
       credentials: true
       }
   });
+
+  io.adapter(redis({
+    host: 'localhost',
+    port: 6379
+  }))
+  
   app.set('io', io);
 
   // /chat/{roomID} : chat 네임스페이스에 접속 시
   io.on('connection', (socket) => {
     console.log('client connect');
+    winston.info('client connect ' + process.pid)
 
     socket.on('disconnect', () => { //disconnect 이벤트 리스너
       console.log('client disconnect');
+      winston.info('client disconnect ' + process.pid)
     });
     socket.on('chat', (data) => {   //chat 이벤트 리스너
-      console.log('chat event emit');
+      console.log('chat event emit ' + process.pid);
+      winston.info('chat event emit ' + process.pid)
       io.emit(data);
     });
   });

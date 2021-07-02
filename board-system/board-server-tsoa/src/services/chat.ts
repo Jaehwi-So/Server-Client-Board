@@ -95,7 +95,7 @@ export const insert = async (req: any, form : ChatFormModel, roomId : number): P
             resolve({
                 success : true,
                 message : "채팅 입력 성공",
-                data : null,
+                data : process.pid,
                 code : HttpStatusCode.OK
             } as ResponseModel);
         } 

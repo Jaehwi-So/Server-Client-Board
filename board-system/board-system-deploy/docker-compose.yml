@@ -37,6 +37,18 @@ services:
       - MYSQL_USER=root
       - MYSQL_PASSWORD=root
       - TZ=Asia/Seoul
+  redis:
+    networks:
+      - app-tier
+    image: redis:6.0.3
+    restart: always
+    # hostname: "redis"
+    # command: ["redis-server", "--bind", "redis", "--port", "6379"]
+    ports:
+      - "6379:6379"
+    container_name: redis
+    expose:
+      - "6379"
   app:
     networks:
       - app-tier
@@ -54,10 +66,12 @@ services:
       - "8080:8080"
     links:
       - database
+      - redis
     volumes:
       - /data/Shared/node/log:/root/node-app/log
       - /data/Shared/node/resources:/root/node-app/resources
     depends_on:
       - database
+      - redis
     environment:
       - TZ=Asia/Seoul
