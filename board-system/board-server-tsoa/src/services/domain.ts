@@ -14,6 +14,7 @@ export const insertDomain = async (host : string): Promise<ResponseModel>=> {
                     message: 'Exist Host',
                     code: 412,
                 } as ResponseModel);
+                return;
             }
             const secret : string = uuid();
             await Domain.create({   

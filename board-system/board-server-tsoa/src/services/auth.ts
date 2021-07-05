@@ -36,6 +36,7 @@ export const jwtAuth = (req: express.Request, res: express.Response, scopes?: st
             if(decoded){
                 logger.info(`Token Auth Success : ${token}`)
                 resolve({});
+                return;
             }
             else{
                 reject(new Error(`${DefineCode.ERROR_CODE_AUTH_FAILED}Empty decoded refresh token.`));
@@ -70,6 +71,7 @@ export const jwtAuth = (req: express.Request, res: express.Response, scopes?: st
 export const noneAuth = (req: express.Request, res: express.Response) => {
     return new Promise<any>((resolve, reject) => {
         resolve({});
+        return;
     })
     .catch(err => {
         res.status(HttpStatusCode.UNAUTHORIZED)
@@ -101,6 +103,7 @@ export const jwtLoginAuth = (req: express.Request, res: express.Response, scopes
                 logger.info(`Token Auth Success : ${token}`)
                 
                 resolve(decoded);
+                return;
             }
             else{
                 reject(new Error(`${DefineCode.ERROR_CODE_AUTH_FAILED}Empty decoded refresh token.`));

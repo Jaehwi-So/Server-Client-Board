@@ -24,7 +24,7 @@ module.exports = {
 				test: /\.json$/,
 				loader: 'file-loader',
 				type: 'javascript/auto',
-						exclude: ['/node_modules/'],
+				exclude: ['/node_modules/'],
 			},
 		],
 	},

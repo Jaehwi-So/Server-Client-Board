@@ -17,6 +17,7 @@ export const get_token = async (clientSecret : string): Promise<JwtAuthModel>=> 
                     code: HttpStatusCode.UNAUTHORIZED,
                     message: '토큰 발급 실패',
                 } as JwtAuthModel);
+                return;
             }
             let secret : jwt.Secret;
             secret = process.env.JWT_SECRET!;

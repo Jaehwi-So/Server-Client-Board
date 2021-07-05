@@ -1,4 +1,4 @@
-zip -r ./latest.zip ./docker-compose.yml ../board-server-webpack-dist 
+zip -r ./latest.zip ./docker-compose.yml ../board-server-webpack-dist -x ../board-server-webpack-dist/node_modules
 # 빌드 결과물을 압축하여
 
 pscp -P 22 ./latest.zip media@172.30.1.56:/home/media/Desktop/remote/latest.zip 

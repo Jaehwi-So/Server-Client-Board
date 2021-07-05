@@ -24,6 +24,7 @@ export const selectList = async (page : PageModel): Promise<ResponseModel>=> {
                     data : null,
                     code : HttpStatusCode.NO_CONTENT,
                 } as ResponseModel);
+                return;
             }
             resolve({
                 success : true,
@@ -59,6 +60,7 @@ export const selectOne = async (id : number): Promise<ResponseModel>=> {
                     data : data,
                     code : HttpStatusCode.OK
                 } as ResponseModel);
+                return;
             }
             resolve({
                 success : true,

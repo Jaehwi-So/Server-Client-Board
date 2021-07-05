@@ -16,6 +16,7 @@ export const insertUser = async (user : UserReqModel): Promise<ResponseModel>=> 
                     data : null,
                     code : HttpStatusCode.BAD_REQUEST
                 } as ResponseModel);
+                return;
             }
 
             const hash : string = await bcrypt.hash(user.password, 12); //비밀번호 평문 암호화
