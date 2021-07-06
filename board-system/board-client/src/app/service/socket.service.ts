@@ -19,8 +19,11 @@ export class SocketService {
       console.log('socket connect()');
       // If you aren't familiar with environment variables then
       // you can hard code `environment.ws_url` as `http://localhost:5000`
-      this.socket = io(environment.serverURL, {
+      this.socket = io(`${environment.serverURL}/chat`, {
         //withCredentials: true
+        query: {
+          "roomID": 1
+        }
       });
   
       // We define our observable which will observe any incoming messages
@@ -49,6 +52,10 @@ export class SocketService {
       // we return our Rx.Subject which is a combination
       // of both an observer and observable.
       return Rx.Subject.create(chatObserver, chatObservable);
+    }
+
+    disconnect() {
+      this.socket.disconnect();
     }
 
 }

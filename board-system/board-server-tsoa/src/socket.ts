@@ -9,34 +9,49 @@ export const socket = (server, app) => {
       origin: 'http://localhost:4200',
       //origins: ['http://localhost:8080', 'http://localhost:4200'],
       methods: ["GET", "POST", "UPDATE", "DELETE"],
-      allowedHeaders: ["my-custom-header"],
+      //allowedHeaders: ["my-custom-header"],
       credentials: true
       }
   });
+
+  const chat = io.of('/chat');
 
   io.adapter(redis({
     host: 'localhost',
     port: 6379
   }))
-  
-  app.set('io', io);
 
-  // /chat/{roomID} : chat 네임스페이스에 접속 시
+  //Room 사용 안할 때 Case
   io.on('connection', (socket) => {
-    console.log('client connect');
     winston.info('client connect ' + process.pid)
 
     socket.on('disconnect', () => { //disconnect 이벤트 리스너
-      console.log('client disconnect');
       winston.info('client disconnect ' + process.pid)
     });
     socket.on('chat', (data) => {   //chat 이벤트 리스너
-      console.log('chat event emit ' + process.pid);
       winston.info('chat event emit ' + process.pid)
       io.emit(data);
     });
   });
 
+  //Room 사용 Case
+  chat.on('connection', (socket) => {
+    const roomId = socket.handshake.query.roomID; //Query로 받은 roomID
+    socket.join(roomId);
+    winston.info('Chat client connect ' + roomId + " " + process.pid);
+
+    socket.on('disconnect', () => { //disconnect 이벤트 리스너
+      winston.info('Chat client disconnect ' + process.pid);
+      socket.leave(roomId);
+    });
+    socket.on('chat', (data) => {   //chat 이벤트 리스너
+      console.log('chat event emit ' + process.pid);
+      winston.info('Chat event emit ' + process.pid)
+      socket.to(data.room).emit(data);
+    });
+  });
+
+  app.set('io', io);
 }
 
 

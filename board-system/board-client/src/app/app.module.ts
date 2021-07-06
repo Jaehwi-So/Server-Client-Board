@@ -49,8 +49,8 @@ export function jwtTokenGetter(){
     ApiService,
     AuthService,
     PageService,
-    SocketService,
-    ChatService
+    //SocketService,
+    //ChatService
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA  //앵귤러 전용 태그 사용을 위한 스키마

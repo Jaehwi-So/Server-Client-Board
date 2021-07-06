@@ -92,8 +92,8 @@ export const insert = async (req: any, form : ChatFormModel, roomId : number): P
                 content : content,
                 uid : uid
             });
-            const res = req.app.get('io').emit('chat', chat);
-            console.log(res);
+            //const res = req.app.get('io').emit('chat', chat);
+            const res = req.app.get('io').of('/chat').emit('chat', chat);   //emit
             resolve({
                 success : true,
                 message : "채팅 입력 성공",

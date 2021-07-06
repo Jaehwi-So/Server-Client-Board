@@ -41,6 +41,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getList();
+    this.chatService.socketConnect();
     this.chatService.messages.subscribe(msg => {
       console.log('sub', msg);
       this.getList();
@@ -48,7 +49,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-
+    this.chatService.socketDisconnect();
   }
   getList(){
     const boards$ = this.apiService.get_api_request_signin(`${this.apiUrl}/chat?start=1&end=100`);
